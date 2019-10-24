@@ -2,6 +2,7 @@
 Stack
 - Vue.js
 - Grails
+- Hibernate
 - MySQL / PostgreSQL
 - Heroku
 - Trello
