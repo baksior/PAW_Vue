@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 Vue.component('Navigation')
 
 /* eslint-disable no-new */
-new Vue({
+export const bus = new Vue({
   el: '#app',
   router,
   components: { App },

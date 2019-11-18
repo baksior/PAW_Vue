@@ -2,16 +2,18 @@
   <div class="home">
     <HomeInformation />
     <HomeHeader />
+    <HomeModal />
   </div>
 </template>
 
 <script>
-import HomeInformation from '@/components/HomeInformation'
-import HomeHeader from '@/components/HomeHeader'
+import HomeInformation from '@/components/Home/HomeInformation'
+import HomeHeader from '@/components/Home/HomeHeader'
+import HomeModal from '@/components/Home/HomeModal'
 
 export default {
   name: 'Home',
-  components: {HomeInformation, HomeHeader},
+  components: {HomeInformation, HomeHeader, HomeModal},
   data () {
     return {
         

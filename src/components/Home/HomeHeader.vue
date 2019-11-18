@@ -14,14 +14,19 @@
 </template>
 
 <script>
-import HomeSidebar from '@/components/HomeSidebar'
-import HomeBoards from '@/components/HomeBoards'
+import HomeSidebar from '@/components/Home/HomeSidebar'
+import HomeBoards from '@/components/Home/HomeBoards'
 
 export default {
   name: 'HomeHeader',
   components: {HomeSidebar, HomeBoards},
   data () {
     return {
+    }
+  },
+  methods: {
+    showModal(){
+      alert('dziala xd');
     }
   }
 }

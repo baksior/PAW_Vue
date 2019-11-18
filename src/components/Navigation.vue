@@ -67,4 +67,9 @@ export default {
     width: 1em;
     margin-left: -1em;
 }
+.fa-search{
+  position: relative;
+  left: -37px;
+  color: #FFFFFF;
+}
 </style>
