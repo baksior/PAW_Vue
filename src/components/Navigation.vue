@@ -27,6 +27,10 @@ export default {
 </script>
 
 <style scoped>
+.search_input{
+    border: 0;
+    background: #4E97C2;
+}
 .navigation{
     background: #026AA7;
 }
