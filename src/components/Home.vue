@@ -106,15 +106,15 @@ export default {
             name: ''
         },
         boards: [
-            { name: 'Tablica 1', image: 'images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 2', image: 'images/lolImg.jpg' },
-            { name: 'Tablica 3', image: 'images/lolImg.jpg' },
-            { name: 'Tablica 4', image: 'images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 5', image: 'images/lolImg.jpg' },
-            { name: 'Tablica 6', image: 'images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 7', image: 'images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 8', image: 'images/lolImg.jpg' },
-            { name: 'Tablica 9', image: 'images/lolImg.jpg', lastSeen: true }
+            { name: 'Tablica 1', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
+            { name: 'Tablica 2', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
+            { name: 'Tablica 3', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
+            { name: 'Tablica 4', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
+            { name: 'Tablica 5', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
+            { name: 'Tablica 6', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
+            { name: 'Tablica 7', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
+            { name: 'Tablica 8', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
+            { name: 'Tablica 9', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true }
         ],
         showModal: false,
         request: {},
