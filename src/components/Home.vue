@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <HomeInformation />
-    <HomeHeader @showModal="showModal" />
-    <HomeModal ref="modal" />
+    <HomeHeader ref="HomeHeader" @showModal="showModal" />
+    <HomeModal ref="modal" @addBoard="addBoard" />
   </div>
 </template>
 

@@ -68,8 +68,8 @@ export default {
     }
   },
   methods:{
-    addBoard(name){
-      this.boards.push({ name: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
+    addBoard(_name){
+      this.boards.push({ name: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
     },
     createBoard(){
         this.$emit('showModal');

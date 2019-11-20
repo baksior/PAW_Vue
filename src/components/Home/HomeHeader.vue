@@ -6,7 +6,7 @@
                 <HomeSidebar />
             </div>
             <div class="col-9">
-                <HomeBoards @showModal="showModal" />
+                <HomeBoards ref="HomeBoards" @showModal="showModal" />
             </div>
         </div>
     </div>
