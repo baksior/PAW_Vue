@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <div class="card bg-nieChceMiSieIJestPoPolnocyAJaPoSilceXd" @click.self="createBoard">
+                        <div class="card bg-nieChceMiSieIJestPoPolnocyAJaPoSilceXd" @mousedown="createBoard">
                             <div class="card-body">
                                 <p class="card-text">Tworzenie tablic już hula :o</p>
                             </div>
