@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <HomeInformation />
-    <HomeHeader />
-    <HomeModal />
+    <HomeHeader @showModal="showModal" />
+    <HomeModal ref="modal" />
   </div>
 </template>
 
@@ -16,10 +16,17 @@ export default {
   components: {HomeInformation, HomeHeader, HomeModal},
   data () {
     return {
-        
-        showModal: false,
-        request: {},
-        showMenu: true
+    }
+  },
+  methods: {
+    addBoard(name){
+      this.$refs.HomeHeader.addBoard(name);
+    },
+    showModal(){
+      this.$refs.modal.showModal();
+    },
+    closeModal(){
+      this.$refs.modal.closeModal();
     }
   }
 }

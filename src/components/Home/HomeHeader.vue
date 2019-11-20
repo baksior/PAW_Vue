@@ -6,7 +6,7 @@
                 <HomeSidebar />
             </div>
             <div class="col-9">
-                <HomeBoards />
+                <HomeBoards @showModal="showModal" />
             </div>
         </div>
     </div>
@@ -25,8 +25,11 @@ export default {
     }
   },
   methods: {
+    addBoard(name){
+      this.$refs.HomeBoards.addBoard(name);
+    },
     showModal(){
-      alert('dziala xd');
+      this.$emit('showModal');
     }
   }
 }

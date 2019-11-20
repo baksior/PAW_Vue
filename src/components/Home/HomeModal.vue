@@ -1,5 +1,5 @@
 <template>
-    <transition v-if="showModal" name="modal">
+    <transition v-if="showModalAttr" name="modal">
         <div class="HomeModal">
             <div class="modal-wrapper">
             <div class="modal-container">
@@ -12,8 +12,11 @@
 
                 <div class="modal-footer">
                 <slot name="footer">
-                    <button class="modal-default-button" @click="close">
+                    <button class="modal-default-button" @click="addBoard">
                     Utwórz tablicę
+                    </button>
+                    <button class="modal-default-button" @click="close">
+                    Zamknij
                     </button>
                 </slot>
                 </div>
@@ -29,14 +32,25 @@ export default {
   data: function(){
         return {
             nameOfBoard: '',
-            showModal: false
+            showModalAttr: false
         }
     },
     methods:{
-        close(){
-            this.$emit('close', this.nameOfBoard);
-            this.nameOfBoard = '';
-        }
+      addBoard(){
+        this.closeModal();
+        this.$emit('addBoard', this.nameOfBoard);
+        this.nameOfBoard = '';
+      },
+      close(){
+        this.closeModal();
+        this.nameOfBoard = '';
+      },
+      showModal(){
+        this.showModalAttr = true;
+      },
+      closeModal(){
+        this.showModalAttr = false;
+      }
     }
 }
 </script>

@@ -65,9 +65,14 @@ export default {
             { name: 'Tablica 8', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
             { name: 'Tablica 9', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true }
         ],
-        createBoard(){
-			$emit('showModal');
-        }
+    }
+  },
+  methods:{
+    addBoard(name){
+      this.boards.push({ name: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
+    },
+    createBoard(){
+        this.$emit('showModal');
     }
   }
 }
