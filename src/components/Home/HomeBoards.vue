@@ -6,7 +6,7 @@
             &nbsp;Ostatnio przeglądane
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-3" v-for="item in boards" v-if="item.lastSeen === true">
+                    <div class="col-3" v-bind:key={i} v-for="(item, i) in boards" v-if="item.lastSeen === true">
                         <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.name">
                             <img :src="item.image" class="card-img" alt="title">
                             <div class="card-img-overlay">
@@ -24,7 +24,7 @@
             &nbsp;Tablice prywatne
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-3" v-for="item in boards">
+                    <div class="col-3" v-bind:key={i} v-for="(item, i) in boards">
                         <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.name">
                             <img :src="item.image" class="card-img" alt="title">
                             <div class="card-img-overlay">
