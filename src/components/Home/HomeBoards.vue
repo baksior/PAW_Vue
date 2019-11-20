@@ -25,7 +25,7 @@
             <div class="container mt-4">
                 <div class="row">
                     <div class="col-3" v-for="item in boards">
-                        <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.name">
+                        <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.name">
                             <img :src="item.image" class="card-img" alt="title">
                             <div class="card-img-overlay">
                                 <h6 class="card-title">{{item.name}}</h6>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <div class="card bg-nieChceMiSieIJestPoPolnocyAJaPoSilceXd" @mousedown="createBoard">
+                        <div class="card bg-nieChceMiSieIJestPoPolnocyAJaPoSilceXd" @click="createBoard">
                             <div class="card-body">
                                 <p class="card-text">Tworzenie tablic już hula :o</p>
                             </div>
