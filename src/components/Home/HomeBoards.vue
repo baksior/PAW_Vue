@@ -66,7 +66,7 @@ export default {
             { name: 'Tablica 9', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true }
         ],
         createBoard(){
-			alert('okej');
+			console.log(this);
         }
     }
   }
