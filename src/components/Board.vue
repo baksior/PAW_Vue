@@ -23,7 +23,7 @@
             </div>
         
             <div class="board newListForm">
-                <p>Add new list<p>
+                <p>Add new list</p>
                 <input v-model="newListName" type="text" placeholder="Enter list name.." />
                 <button @click="addList">Add list</button>
             </div>
