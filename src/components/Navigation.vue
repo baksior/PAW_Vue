@@ -1,11 +1,12 @@
 <template>
   <div class="navigation">
     <nav class="navbar navbar-default">
-        <i class="fas fa-home trello_button" @mousedown="goToHome"></i>
-        <span class="trello_button color-white" @mousedown="goToBoardsList">
+      <router-link class="nav-link" to="/home/">
+        <i class="fas fa-home trello_button" @mousedown="goToHome"></i></router-link>
+        <router-link class="nav-link" to="/home/"><span class="trello_button color-white" @mousedown="goToBoardsList">
             <i class="fas fa-calendar-day"></i>
             &nbsp;Tablice
-        </span>
+        </span></router-link>
         <form class="form-inline">
             <input class="form-control mr-sm-2 search_input" type="search" placeholder="" :aria-label={searchLabel}>
             <i class="fas fa-search"></i>
