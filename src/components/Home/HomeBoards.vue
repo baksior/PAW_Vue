@@ -69,6 +69,16 @@ export default {
     },
     createBoard(){
         this.$emit('showModal');
+    },
+    postPost() {
+    axios.post(`http://localhost:8090/boards`, {
+      title: this.newListName,
+      image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
+    })
+    .then(response => {})
+    .catch(e => {
+      this.errors.push(e)
+    })
     }
   },
   mounted () {

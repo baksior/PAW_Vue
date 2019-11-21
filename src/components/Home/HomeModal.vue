@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'HomeModal',
   data: function(){
@@ -39,7 +40,16 @@ export default {
       addBoard() {
         this.closeModal();
         this.$emit('addBoard', this.nameOfBoard);
-        this.nameOfBoard = '';
+        
+        axios.post(`http://localhost:8090/boards`, {
+          title: this.nameOfBoard,
+          image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
+        })
+    .then(response => {})
+    .catch(e => {
+      this.errors.push(e)
+    })
+    this.nameOfBoard = '';
       },
       close(){
         this.closeModal();
