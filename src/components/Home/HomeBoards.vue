@@ -26,12 +26,12 @@
             &nbsp;Tablice prywatne
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-3" v-bind:key={i} v-for="(item, i) in boards">
+                    <div class="col-3" v-bind:key={i} v-for="(item, i) in info">
                         <router-link class="nav-link" to="/board/">
-                            <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.name">
+                            <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.title">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
-                                    <h6 class="card-title">{{item.name}}</h6>
+                                    <h6 class="card-title">{{item.title}}</h6>
                                 </div>
                             </div>
                         </router-link>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'HomeBoards',
   data () {
@@ -78,6 +79,19 @@ export default {
     createBoard(){
         this.$emit('showModal');
     }
+  },
+  mounted () {
+    axios
+      .get('http://localhost:8090/boards.json')
+      .then(response => {
+        this.info = response.data.boards
+        console.log(this.info)
+      })
+      .catch(error => {
+        console.log(error)
+      //  this.errored = true
+      })
+      //.finally(() => this.loading = false)
   }
 }
 </script>

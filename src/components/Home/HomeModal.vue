@@ -36,7 +36,7 @@ export default {
         }
     },
     methods:{
-      addBoard(){
+      addBoard() {
         this.closeModal();
         this.$emit('addBoard', this.nameOfBoard);
         this.nameOfBoard = '';
