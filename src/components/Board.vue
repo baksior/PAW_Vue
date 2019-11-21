@@ -1,110 +1,110 @@
 <template>
-    <div class="boards">
-        <div class="board" v-bind:key={i} v-for="(item, i) in lists">
-            <draggable class="list-group" :list="item.list" group="people" @change="log">
-                <div
-                    class="list-group-item"
-                    v-for="(element, index) in item.list"
-                    :key="element.name"
-                >
-                {{ element.name }} {{ index }}
+    <div class="Tablica">
+        <h3>{{boardName}}</h3>
+        <div class="boards">
+            <div class="board" v-for="(item, i) in lists">
+                <input type="text" v-model="item.name" class="transparentInput" />
+                <draggable class="list-group" :list="item.list" group="people" @change="log">
+                    <div
+                        class="list-group-item"
+                        v-for="(element, index) in item.list"
+                        :key="index"
+                        @click="showCard(index, element, cardId)"
+                    >
+                    {{ element.name }}
+                    </div>
+                </draggable>
+                <div class="addCardForm mt-5" v-if="item.addCardForm === true">
+                    <input v-model="item.newCardName" type="text" placeholder="Enter card name.." />
+                    <button @click="createCard(i)">Create card</button>
                 </div>
-            </draggable>
-        </div>
-    
-        <div class="board">
-            <input type="text" />
-            <button>Dodaj kartę</button>
-        </div>
-    </div>
-  <!-- <div class="container">
-    <div class="row">
-    <div class="col-3">
-      <h3>Draggable 1</h3>
-      <draggable class="list-group" :list="list1" group="people" @change="log">
-        <div
-          class="list-group-item"
-          v-for="(element, index) in list1"
-          :key="element.name"
-        >
-          {{ element.name }} {{ index }}
-        </div>
-      </draggable>
-    </div>
+                <button class="addCardButton" @click="showAddCardForm(i)" v-if="item.addCardForm === false">Add card</button>
+            </div>
+        
+            <div class="board newListForm">
+                <p>Add new list<p>
+                <input v-model="newListName" type="text" placeholder="Enter list name.." />
+                <button @click="addList">Add list</button>
+            </div>
 
-    <div class="col-3">
-      <h3>Draggable 2</h3>
-      <draggable class="list-group" :list="list2" group="people" @change="log">
-        <div
-          class="list-group-item"
-          v-for="(element, index) in list2"
-          :key="element.name"
-        >
-          {{ element.name }} {{ index }}
+            <CardModal @saveDescription="saveDescription" ref="cardModal" />
         </div>
-      </draggable>
     </div>
-  </div>
-  </div> -->
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+import CardModal from '@/components/Board/CardModal'
 
 export default {
   name: 'Board',
   display: "Two Lists",
   order: 1,
     components: {
-        draggable
+        draggable, CardModal
     },
   data () {
     return {
-      list: message.map((name, index) => {
-        return { name, order: index + 1, fixed: false };
-      }),
-      list2: [],
       editable: true,
       isDragging: true,
-      delayedDragging: false
-    };
-  },
-  data() {
-    return {
+      delayedDragging: false,
+      cardId: -1,
+      boardName: 'Tablica',
+      newListName: '',
         lists: [
             {
+                addCardForm: false,
+                newCardName: '',
+                name: 'Lista 1',
                 list: [
-                    { name: "John", id: 1 },
-                    { name: "Joao", id: 2 },
-                    { name: "Jean", id: 3 },
-                    { name: "Gerard", id: 4 }
+                    { name: "John", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.', id: 1 },
+                    { name: "Joao", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 2 },
+                    { name: "Jean", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 3 },
+                    { name: "Gerard", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 4 }
                 ]
             },
-            {
+            {   
+                name: 'Lista 2',
+                addCardForm: false,
+                newCardName: '',
                 list: [
-                    { name: "John", id: 1 },
-                    { name: "Joao", id: 2 },
-                    { name: "Jean", id: 3 },
-                    { name: "Gerard", id: 4 }
+                    { name: "John", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 1 },
+                    { name: "Joao", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 2 },
+                    { name: "Jean", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',  id: 3 },
+                    { name: "Gerard", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 4 }
                 ]
             }
         ]
     };
   },
   methods: {
-    add: function() {
-      this.list.push({ name: "Juan" });
+      saveDescription: function(index, description){
+          this.lists[this.cardId].list[index].description = description;
+      },
+      showCard: function(index, element, cardId){
+        this.$refs.cardModal.showModal(index, element);
+        this.cardId = cardId;
+      },
+      createCard: function(item){
+          this.closeAddCardForm(item);
+          var element = this.lists[item];
+          var newElement = {name: element.newCardName, id: element.list.length};
+
+          element.list.push(newElement);
+          element.newCardName = '';
+      },
+    showAddCardForm: function(item){
+        this.lists[item].addCardForm = true;
     },
-    replace: function() {
-      this.list = [{ name: "Edgard" }];
+    closeAddCardForm: function(item){
+        this.lists[item].addCardForm = false;
     },
-    clone: function(el) {
-      return {
-        name: el.name + " cloned"
-      };
-    },
-    log: function(evt) {
-      window.console.log(evt);
+    addList: function(){
+        if(this.newListName == '')
+            this.newListName = "New list";
+
+        this.lists.push({name: this.newListName, list: [], description: '', addCardForm: false, newCardName: ''});
+        this.newListName = "";
     }
   }
 }
@@ -118,11 +118,12 @@ export default {
 }
 
 .board{
-    display: inline-block;
+    float: left;
     width: 235px;
-    height: 850px;
-    min-height: 100%;
     margin: 10px;
+    padding: 10px;
+    border: 1px solid #D8DBE4;
+    border-radius: 5px;
 }
 .flip-list-move {
   transition: transform 0.5s;
@@ -138,9 +139,46 @@ export default {
   min-height: 20px;
 }
 .list-group-item {
-  cursor: move;
+  cursor: pointer;
 }
 .list-group-item i {
   cursor: pointer;
+}
+
+.newListForm input, .addCardForm input{
+    display: block;
+    width: 210px;
+    padding: 5px;
+    border: 1px solid #D8DBE4;
+    border-radius: 5px;
+}
+
+.newListForm button, .addCardForm button{
+    display: block;
+    width: 210px;
+    padding: 5px;
+    border: 1px solid #D8DBE4;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.addCardButton{
+    display: block;
+    width: 212px;
+    padding: 5px;
+    background-color: #D8DBE4;
+    border: 1px solid #D8DBE4;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.mt-5{
+    margin-top: 5px;
+}
+
+.transparentInput{
+    background: inherit;
+    border: none;
+    margin-bottom: 4px;
 }
 </style>
