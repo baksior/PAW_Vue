@@ -14,6 +14,7 @@
                     <button @click="saveDescription" v-if="editDescription === true">Save</button>
                 </div>
                 <button @click="closeModal">Close</button>
+                <button @click="removeCard">Remove card</button>
             </div>
         </div>
     </div>
@@ -46,6 +47,10 @@ export default {
       saveDescription: function(){
           this.$emit('saveDescription', this.itemId, this.item.description);
           this.toggleEditDescription();
+      },
+      removeCard: function(){
+          this.closeModal();
+          this.$emit('removeCard', this.itemId);
       }
   }
 }

@@ -9,7 +9,7 @@
                         class="list-group-item"
                         v-for="(element, index) in item.list"
                         :key="index"
-                        @click="showCard(index, element, cardId)"
+                        @click="showCard(index, element, i)"
                     >
                     {{ element.name }}
                     </div>
@@ -19,6 +19,7 @@
                     <button @click="createCard(i)">Create card</button>
                 </div>
                 <button class="addCardButton" @click="showAddCardForm(i)" v-if="item.addCardForm === false">Add card</button>
+                <button class="addCardButton" @click="removeList(i)" v-if="item.addCardForm === false">Remove list</button>
             </div>
         
             <div class="board newListForm">
@@ -27,7 +28,7 @@
                 <button @click="addList">Add list</button>
             </div>
 
-            <CardModal @saveDescription="saveDescription" ref="cardModal" />
+            <CardModal @removeCard="removeCard" @saveDescription="saveDescription" ref="cardModal" />
         </div>
     </div>
 </template>
@@ -81,6 +82,12 @@ export default {
       saveDescription: function(index, description){
           this.lists[this.cardId].list[index].description = description;
       },
+      removeCard: function(index){
+          this.lists[this.cardId].list.splice(index, 1);
+      },
+      removeList: function(index){
+          this.lists.splice(index, 1);
+      },
       showCard: function(index, element, cardId){
         this.$refs.cardModal.showModal(index, element);
         this.cardId = cardId;
@@ -111,6 +118,9 @@ export default {
 </script>
 
 <style scoped>
+.Tablica{
+    padding: 20px;
+}
 .boards{
     overflow-x: scroll;
     overflow-y: hidden;
