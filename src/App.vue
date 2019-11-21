@@ -13,7 +13,11 @@ import HomeModal from '@/components/Home/HomeModal'
 
 export default {
   name: 'App',
-  components: {Navigation, HomeModal}
+  components: {Navigation, HomeModal},
+  methods:{
+    
+  render (h) { return h(this.ViewComponent) }
+  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="Tablica">
-        <h3>{{boardName}}</h3>
+        <input type="text" class="boardTitle transparentInput" v-model="boardName" />
         <div class="boards">
             <div class="board" v-for="(item, i) in lists">
                 <input type="text" v-model="item.name" class="transparentInput" />
@@ -14,7 +14,7 @@
                     {{ element.name }}
                     </div>
                 </draggable>
-                <div class="addCardForm mt-5" v-if="item.addCardForm === true">
+                <div class="addCardForm" v-if="item.addCardForm === true">
                     <input v-model="item.newCardName" type="text" placeholder="Enter card name.." />
                     <button @click="createCard(i)">Create card</button>
                 </div>
@@ -134,6 +134,11 @@ export default {
     padding: 10px;
     border: 1px solid #D8DBE4;
     border-radius: 5px;
+}
+.boardTitle{
+    width: 400px;
+    font-weight: bold;
+    font-size: 20px;
 }
 .flip-list-move {
   transition: transform 0.5s;
