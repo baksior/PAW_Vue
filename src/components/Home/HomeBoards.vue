@@ -84,14 +84,8 @@ export default {
     axios
       .get('http://localhost:8090/boards.json')
       .then(response => {
-        this.info = response.data.boards
-        console.log(this.info)
-      })
-      .catch(error => {
-        console.log(error)
-      //  this.errored = true
-      })
-      //.finally(() => this.loading = false)
+      this.info = response.data
+    })
   }
 }
 </script>
