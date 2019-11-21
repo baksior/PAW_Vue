@@ -8,10 +8,10 @@
                 <div class="row">
                     <div class="col-3" v-bind:key={i} v-for="(item, i) in boards" v-if="item.lastSeen === true">
                         <router-link class="nav-link" to="/board/">
-                            <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.name">
+                            <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.title">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
-                                    <h6 class="card-title">{{item.name}}</h6>
+                                    <h6 class="card-title">{{item.title}}</h6>
                                 </div>
                             </div>
                         </router-link>
@@ -26,9 +26,9 @@
             &nbsp;Tablice prywatne
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-3" v-bind:key={i} v-for="(item, i) in info">
+                    <div class="col-3" v-bind:key={i} v-for="(item, i) in boards">
                         <router-link class="nav-link" to="/board/">
-                            <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.title">
+                            <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.title">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
                                     <h6 class="card-title">{{item.title}}</h6>
@@ -60,21 +60,12 @@ export default {
             name: ''
         },
         boards: [
-            { name: 'Tablica 1', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 2', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
-            { name: 'Tablica 3', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
-            { name: 'Tablica 4', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 5', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
-            { name: 'Tablica 6', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 7', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
-            { name: 'Tablica 8', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
-            { name: 'Tablica 9', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true }
         ],
     }
   },
   methods:{
     addBoard(_name){
-      this.boards.push({ name: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
+      this.boards.push({ title: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
     },
     createBoard(){
         this.$emit('showModal');
@@ -84,7 +75,8 @@ export default {
     axios
       .get('http://localhost:8090/boards.json')
       .then(response => {
-      this.info = response.data
+          console.log('respones', response);
+      this.boards = response.data
     })
   }
 }

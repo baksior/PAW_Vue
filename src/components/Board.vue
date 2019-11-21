@@ -64,7 +64,7 @@ export default {
                     { name: "Gerard", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 4 }
                 ]
             },
-            {   
+            {
                 name: 'Lista 2',
                 addCardForm: false,
                 newCardName: '',
