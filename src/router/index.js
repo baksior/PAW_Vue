@@ -25,16 +25,11 @@ export default new Router({
     },
     {
       path: '/board/:id',
-      name: 'Board',
+      name: 'BoardById',
       component: Board
     }
   ],
   data: {
     currentRoute: window.location.pathname
-  },
-  computed: {
-    ViewComponent () {
-      return routes[this.currentRoute]
-    }
-  },
+  }
 })

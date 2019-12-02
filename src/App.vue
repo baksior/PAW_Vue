@@ -15,8 +15,9 @@ export default {
   name: 'App',
   components: {Navigation, HomeModal},
   methods:{
-    
-  render (h) { return h(this.ViewComponent) }
+    render (h) { 
+      return h(this.ViewComponent)
+    }
   }
 }
 </script>
@@ -26,5 +27,15 @@ body, html{
     background-color: #FAFBFC;
     padding: 0;
     margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#app{
+  
+    padding: 0;
+    margin: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
