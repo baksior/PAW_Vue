@@ -22,9 +22,6 @@ export default {
       title: name,
       image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
     })
-      .then(response => {
-        //return response.data
-      })
   }
 }
 </script>
