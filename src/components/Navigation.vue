@@ -1,16 +1,29 @@
 <template>
   <div class="navigation">
-    <nav class="navbar navbar-default">
-      <router-link class="nav-link" to="/home/">
-        <i class="fas fa-home trello_button" @mousedown="goToHome"></i></router-link>
-        <router-link class="nav-link" to="/home/"><span class="trello_button color-white" @mousedown="goToBoardsList">
-            <i class="fas fa-calendar-day"></i>
-            &nbsp;Tablice
-        </span></router-link>
-        <form class="form-inline">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/home/">
+              <span class="trello_button color-white" @mousedown="goToBoardsList">
+                <i class="fas fa-home" @mousedown="goToHome"></i>
+              </span>
+            </router-link>
+          </li>
+          <li>
+            <router-link class="nav-link" to="/home/">
+              <span class="trello_button color-white" @mousedown="goToBoardsList">
+                <i class="fas fa-calendar-day"></i>
+                  &nbsp;Tablice
+              </span>
+            </router-link>
+          </li>
+        </ul>
+          <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2 search_input" type="search" placeholder="" :aria-label={searchLabel}>
-            <i class="fas fa-search"></i>
-        </form>
+              <i class="fas fa-search"></i>
+          </form>
+      </div>
     </nav>
   </div>
 </template>
@@ -20,7 +33,7 @@ export default {
   name: 'Navigation',
   data () {
     return {
-      msg: 'Upsi kurwa',
+      msg: 'Upsi ',
       searchLabel: 'Search'
     }
   }
@@ -28,47 +41,25 @@ export default {
 </script>
 
 <style scoped>
-.search_input{
+.search_input {
     border: 0;
     background: #4E97C2;
 }
-.navigation{
+.navigation {
     background: #026AA7;
 }
-.trello_button{
+.trello_button {
     background: hsla(0,0%,100%,.3);
     color: #FFFFFF;
     padding: 8px;
     border-radius: 3px;
     font-size: 16px;
 }
-
-.trello_button:hover{
+.trello_button:hover {
     background: rgba(255, 255, 255, 0.2);
     cursor: pointer;
 }
-
-.nav-info{
-    padding: 20px;
-    color: #FFFFFF;
-}
-
-.nav-info ul {
-    list-style: none;
-}
-
-.nav-info ul li::before {
-    font-family: 'Font Awesome\ 5 Free';
-    content: "\f521";
-    position: relative;
-    left: -10px;
-    color: yellow;
-    font-weight: bold;
-    display: inline-block; 
-    width: 1em;
-    margin-left: -1em;
-}
-.fa-search{
+.fa-search {
   position: relative;
   left: -37px;
   color: #FFFFFF;
