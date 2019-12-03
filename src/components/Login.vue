@@ -5,9 +5,9 @@
       <input type="text" v-model="login" placeholder="Enter username..." />
       <input type="password" v-model="password" placeholder="Enter password..." />
 
-      <router-link to="/home/">
+     <!-- <router-link to="/home/"> -->
         <input type="button" value="Log In" @click="tryLogin" />
-      </router-link>
+    <!--  </router-link>  -->
 
       <p @click="toggleMenu" class="blueCentered">Or Sign In</p>
     </form>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import api from './api/api.vue'
 export default {
   name: 'Login',
   data () {
@@ -46,7 +47,14 @@ export default {
         this.menu = 1;
     },
     tryLogin: function(){
-      
+      api.fetchLogin('admin', 'admin')
+          .then(response => {
+             console.log('response POST Login:', response)
+             if(response.status = 201) console.log('trololololol')
+          })
+          .catch(e => {
+            console.log('Error POST Login:', e.message)
+          })
     }
   }
 }

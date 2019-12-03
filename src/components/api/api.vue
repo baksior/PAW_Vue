@@ -22,6 +22,13 @@ export default {
       title: name,
       image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
     })
+  },
+
+  fetchLogin (mail, password) {
+    return axios.post('/api/login/', {
+      username: mail,
+      password: password
+    })
   }
 }
 </script>
