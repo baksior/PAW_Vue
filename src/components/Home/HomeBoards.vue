@@ -73,14 +73,11 @@ export default {
         this.$emit('showModal');
     },
     postPost() {
-    axios.post(`http://localhost:8090/boards`, {
-      title: this.newListName,
-      image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
-    })
-    .then(response => {})
-    .catch(e => {
-      this.errors.push(e)
-    })
+    api.fetchPostBoard(this.newListName)
+        .then(response => { console.log('response POST:', response) })
+        .catch(e => {
+        this.errors.push(e)
+        })
     }
   },
   beforeMount () {
