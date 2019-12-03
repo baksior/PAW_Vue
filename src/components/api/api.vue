@@ -12,9 +12,9 @@ const instance = axios.create({
 export default {
   fetchGetBoards () {
     return axios.get('board/')
-      .then(response => {
-        return response.data
-      })
+  //    .then(response => {
+  //      return response.data
+  //    })
   },
 
   fetchPostBoard (name) {
