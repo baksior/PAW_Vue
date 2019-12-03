@@ -89,6 +89,7 @@ export default {
           this.boards = response.data;
           console.log('boards:', this.boards);
       })
+      // TODO: add try and isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
    /* axios
       .get('http://localhost:8090/boards.json')
       .then(response => {
