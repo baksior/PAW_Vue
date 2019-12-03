@@ -29,6 +29,13 @@ export default {
       username: mail,
       password: password
     })
+  },
+
+  fetchRegister (mail, password) {
+    return axios.post('/api/register/', {
+      username: mail,
+      password: password
+    })
   }
 }
 </script>

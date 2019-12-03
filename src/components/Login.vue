@@ -18,9 +18,9 @@
             <input type="password" v-model="password2" placeholder="Repeat password..." />
 
 
-      <router-link to="/home/">
-        <input type="button" value="Register" @click="tryLogin" />
-      </router-link>
+    <!--  <router-link to="/home/">   -->
+        <input type="button" value="Register" @click="tryRegister" />
+    <!--  </router-link>  -->
 
       <p @click="toggleMenu" class="blueCentered">Or Log In</p>
     </form>
@@ -46,11 +46,27 @@ export default {
       else
         this.menu = 1;
     },
-    tryLogin: function(){
+    tryLogin: function() {
       api.fetchLogin('admin', 'admin')
           .then(response => {
              console.log('response POST Login:', response)
-             if(response.status = 201) console.log('trololololol')
+             if(response.status = 201) {
+               console.log('trololololol')
+               this.$router.push('home');
+             }
+          })
+          .catch(e => {
+            console.log('Error POST Login:', e.message)
+          })
+    },
+    tryRegister: function() {
+        api.fetchRegister('test', 'test')
+          .then(response => {
+             console.log('response POST Login:', response)
+             if(response.status = 201) {
+               console.log('trololololol')
+               this.menu = 1;
+             }
           })
           .catch(e => {
             console.log('Error POST Login:', e.message)
