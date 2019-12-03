@@ -52,6 +52,7 @@
 
 <script>
 import axios from 'axios';
+import api from '../api/api.vue'
 export default {
   name: 'HomeBoards',
   data () {
@@ -81,24 +82,30 @@ export default {
     })
     }
   },
-  mounted () {
-    axios
+  beforeMount () {
+      api.fetchGetBoards()
+      .then(response => {
+          console.log('respones from api:', response);
+          this.boards = response.data;
+          console.log('boards:', this.boards);
+      })
+   /* axios
       .get('http://localhost:8090/boards.json')
       .then(response => {
           console.log('respones', response);
       this.boards = response.data
-    })
+    }) */
   }
 }
 </script>
 
 <style scoped>
-.card{
+.card {
     margin: 5px 0px;
     opacity: 0.9;
 }
 
-.card:hover{
+.card:hover {
     cursor: pointer;
     opacity: 1;
 }
