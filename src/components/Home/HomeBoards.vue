@@ -62,13 +62,14 @@ export default {
         },
         boards: [
         ],
+        isLoading: false,
     }
   },
   methods:{
-    addBoard(_name){
+    addBoard(_name) {
       this.boards.push({ title: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
     },
-    createBoard(){
+    createBoard() {
         this.$emit('showModal');
     },
     postPost() {
@@ -83,19 +84,16 @@ export default {
     }
   },
   beforeMount () {
-      api.fetchGetBoards()
-      .then(response => {
-          console.log('respones from api:', response);
-          this.boards = response.data;
-          console.log('boards:', this.boards);
-      })
+    api.fetchGetBoards()
+    .then(response => {
+        // console.log('respones from api:', response);
+        this.boards = response.data;
+        // console.log('boards:', this.boards);
+    })
+    .catch(error => {
+        console.log('Error GetBoards:', error)
+    })
       // TODO: add try and isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
-   /* axios
-      .get('http://localhost:8090/boards.json')
-      .then(response => {
-          console.log('respones', response);
-      this.boards = response.data
-    }) */
   }
 }
 </script>
