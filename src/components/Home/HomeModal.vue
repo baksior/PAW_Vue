@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios';
+import api from '../api/api.vue'
 export default {
   name: 'HomeModal',
   data: function(){
@@ -41,15 +42,12 @@ export default {
         this.closeModal();
         this.$emit('addBoard', this.nameOfBoard);
         
-        axios.post(`http://localhost:8090/boards`, {
-          title: this.nameOfBoard,
-          image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
-        })
-    .then(response => {})
-    .catch(e => {
-      this.errors.push(e)
-    })
-    this.nameOfBoard = '';
+        api.fetchPostBoard(this.nameOfBoard)
+          .then(response => { console.log('response POST:', response) })
+          .catch(e => {
+            console.log('Error POST Board:', e.message)
+          })
+        this.nameOfBoard = '';
       },
       close(){
         this.closeModal();

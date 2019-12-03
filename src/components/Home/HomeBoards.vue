@@ -71,13 +71,6 @@ export default {
     },
     createBoard() {
         this.$emit('showModal');
-    },
-    postPost() {
-    api.fetchPostBoard(this.newListName)
-        .then(response => { console.log('response POST:', response) })
-        .catch(e => {
-        this.errors.push(e)
-        })
     }
   },
   beforeMount () {
@@ -90,7 +83,7 @@ export default {
     .catch(error => {
         console.log('Error GetBoards:', error)
     })
-      // TODO: add try and isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
+      // TODO: add isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
   }
 }
 </script>
