@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src='./assets/logo.png' />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Navigation />
+    <router-view />
+    <HomeModal />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import styles from './assets/css/all.css'
+import Navigation from '@/components/Navigation'
+import HomeModal from '@/components/Home/HomeModal'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: 'App',
+  components: {Navigation, HomeModal},
+  methods:{
+    render (h) {
+      return h(this.ViewComponent)
+    }
   }
 }
 </script>
 
 <style>
+body, html {
+    background-color: #FAFBFC;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding: 0;
+   margin: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
