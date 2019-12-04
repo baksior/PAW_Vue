@@ -31,7 +31,7 @@
                             <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.name">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
-                                    <h6 class="card-title">{{item.name}}</h6>
+                                    <h6 class="card-title">{{item.title}}</h6>
                                 </div>
                             </div>
                         </router-link>
@@ -93,17 +93,18 @@ export default {
         this.$emit('showModal');
     }
   },
-  beforeMount () {
-    api.fetchGetBoards()
-    .then(response => {
-        // console.log('respones from api:', response);
-        this.boards = response.data;
-        // console.log('boards:', this.boards);
-    })
-    .catch(error => {
-        console.log('Error GetBoards:', error)
-    })
-      // TODO: add isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
+  // beforeMount () {
+    mounted () {
+        api.fetchGetBoards()
+        .then(response => {
+           // console.log('respones from api:', response);
+            this.boards = response.data;
+            // console.log('boards:', this.boards);
+        })
+        .catch(error => {
+            console.log('Error GetBoards:', error)
+        })
+        // TODO: add isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
   }
 }
 </script>
