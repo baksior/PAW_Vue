@@ -25,17 +25,25 @@ export default {
   },
 
   fetchLogin (mail, password) {
-    return axios.post('/api/login/', {
-      username: mail,
-      password: password
-    })
+    return axios({
+      method: 'post',
+      url: '/api/login',
+      data: { username: mail, password: password },
+      headers: {
+        'content-type': 'raw'
+      }
+    });
   },
 
   fetchRegister (mail, password) {
-    return axios.post('/api/register/', {
-      username: mail,
-      password: password
-    })
+    return axios({
+      method: 'post',
+      url: '/api/register',
+      data: { username: mail, password: password },
+      headers: {
+        'content-type': 'raw'
+      }
+    });
   }
 }
 </script>
