@@ -134,6 +134,7 @@ export default {
   },
   methods:{
     restoreCard: function(){
+      this.isArchive = false;
       this.$emit('restoreCard', this.itemId);
     },
     deleteCard: function(){

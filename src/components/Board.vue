@@ -24,6 +24,21 @@
                     <button class="addCardButton" @click="removeList(i)" v-if="item.addCardForm === false">Remove list</button>
                 </div>
             
+                <div class="board">
+                    <input type="text" value="Old ones" class="transparentInput" />
+                    <div  v-for="(item, i) in lists">
+                        <div
+                            v-for="(element, index) in item.list"
+                            :key="index"
+                            @click="showCard(index, element, i, item.name)"
+                        >
+                            <div v-if="element.state === 'archive'" class="list-group-item">
+                                {{ element.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="board newListForm">
                     <p>Add new list</p>
                     <input v-model="newListName" type="text" placeholder="Enter list name.." />
