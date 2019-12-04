@@ -8,10 +8,10 @@
                 <div class="row">
                     <div class="col-3" v-bind:key={i} v-for="(item, i) in boards" v-if="item.lastSeen === true">
                         <router-link class="nav-link" to="/board/">
-                            <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.title">
+                            <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.name">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
-                                    <h6 class="card-title">{{item.title}}</h6>
+                                    <h6 class="card-title">{{item.name}}</h6>
                                 </div>
                             </div>
                         </router-link>
@@ -28,10 +28,10 @@
                 <div class="row">
                     <div class="col-3" v-bind:key={i} v-for="(item, i) in boards">
                         <router-link class="nav-link" to="/board/">
-                            <div class="card bg-dark text-white" @mousedown="goToBoard" :param-id="item.title">
+                            <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.name">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
-                                    <h6 class="card-title">{{item.title}}</h6>
+                                    <h6 class="card-title">{{item.name}}</h6>
                                 </div>
                             </div>
                         </router-link>
@@ -89,12 +89,12 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.card{
     margin: 5px 0px;
     opacity: 0.9;
 }
 
-.card:hover {
+.card:hover{
     cursor: pointer;
     opacity: 1;
 }

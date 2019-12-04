@@ -1,35 +1,38 @@
 <template>
     <div class="Tablica">
-        <h3>{{boardName}}</h3>
-        <div class="boards">
-            <div class="board" v-for="(item, i) in lists">
-                <input type="text" v-model="item.name" class="transparentInput" />
-                <draggable class="list-group" :list="item.list" group="people" @change="log">
-                    <div
-                        class="list-group-item"
-                        v-for="(element, index) in item.list"
-                        :key="index"
-                        @click="showCard(index, element, i)"
-                    >
-                    {{ element.name }}
+        <div class="boardContent">
+            <input type="text" class="boardTitle transparentInput" v-model="boardName" />
+            <div class="boards">
+                <div class="board" v-for="(item, i) in lists">
+                    <input type="text" v-model="item.name" class="transparentInput" />
+                    <draggable class="list-group" :list="item.list" group="people" @change="log">
+                        <div
+                            class="list-group-item"
+                            v-for="(element, index) in item.list"
+                            :key="index"
+                            @click="showCard(index, element, i, item.name)"
+                        >
+                        {{ element.name }}
+                        </div>
+                    </draggable>
+                    <div class="addCardForm" v-if="item.addCardForm === true">
+                        <input v-model="item.newCardName" type="text" placeholder="Enter card name.." />
+                        <button @click="createCard(i)">Create card</button>
                     </div>
-                </draggable>
-                <div class="addCardForm mt-5" v-if="item.addCardForm === true">
-                    <input v-model="item.newCardName" type="text" placeholder="Enter card name.." />
-                    <button @click="createCard(i)">Create card</button>
+                    <button class="addCardButton" @click="showAddCardForm(i)" v-if="item.addCardForm === false">Add card</button>
+                    <button class="addCardButton" @click="removeList(i)" v-if="item.addCardForm === false">Remove list</button>
                 </div>
-                <button class="addCardButton" @click="showAddCardForm(i)" v-if="item.addCardForm === false">Add card</button>
-                <button class="addCardButton" @click="removeList(i)" v-if="item.addCardForm === false">Remove list</button>
-            </div>
-        
-            <div class="board newListForm">
-                <p>Add new list</p>
-                <input v-model="newListName" type="text" placeholder="Enter list name.." />
-                <button @click="addList">Add list</button>
-            </div>
+            
+                <div class="board newListForm">
+                    <p>Add new list</p>
+                    <input v-model="newListName" type="text" placeholder="Enter list name.." />
+                    <button @click="addList">Add list</button>
+                </div>
 
-            <CardModal @removeCard="removeCard" @saveDescription="saveDescription" ref="cardModal" />
+                <CardModal @removeCard="removeCard" @saveDescription="saveDescription" ref="cardModal" />
+            </div>
         </div>
+        
     </div>
 </template>
 
@@ -39,7 +42,9 @@ import CardModal from '@/components/Board/CardModal'
 
 export default {
   name: 'Board',
-  display: "Two Lists",
+  props: {
+      isLogged: Boolean
+  },
   order: 1,
     components: {
         draggable, CardModal
@@ -88,8 +93,8 @@ export default {
       removeList: function(index){
           this.lists.splice(index, 1);
       },
-      showCard: function(index, element, cardId){
-        this.$refs.cardModal.showModal(index, element);
+      showCard: function(index, element, cardId, listName){
+        this.$refs.cardModal.showModal(index, element, listName);
         this.cardId = cardId;
       },
       createCard: function(item){
@@ -118,13 +123,19 @@ export default {
 </script>
 
 <style scoped>
-.Tablica{
-    padding: 20px;
+.boardContent{
+    padding: 80px 30px;
 }
-.boards{
+.Tablica{
+    height: 100%;
+    min-height: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
+}
+.boards{
     white-space: nowrap;
+    height: 100%;
+    min-height: 100%;
 }
 
 .board{
@@ -134,6 +145,11 @@ export default {
     padding: 10px;
     border: 1px solid #D8DBE4;
     border-radius: 5px;
+}
+.boardTitle{
+    width: 400px;
+    font-weight: bold;
+    font-size: 20px;
 }
 .flip-list-move {
   transition: transform 0.5s;

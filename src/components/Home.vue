@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+.home{
+  margin-top: 70px;
+}
 h1, h2 {
   font-weight: normal;
 }

@@ -25,10 +25,10 @@ export default {
     }
   },
   methods: {
-    addBoard(name) {
+    addBoard(name){
       this.$refs.HomeBoards.addBoard(name);
     },
-    showModal() {
+    showModal(){
       this.$emit('showModal');
     }
   }
