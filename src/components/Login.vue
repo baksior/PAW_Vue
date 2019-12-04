@@ -5,24 +5,24 @@
         <div class="col-5 offset-1">
           <form class="loginForm effect6">
             <p class="bold">Login to Trellol</p>
-            <input type="text" v-model="login" placeholder="Enter username..." />
-            <input type="password" v-model="password" placeholder="Enter password..." />
+            <input class="text-dark" type="text" v-model="login" placeholder="admin" /> <!-- TODO wstawić: Enter username... -->
+            <input class="text-dark" type="password" v-model="password" placeholder="admin" /> <!-- TODO wstawić: Enter password... -->
 
-            <router-link to="/home/"> <!-- TODO wyrzucić routet jak będzie API. -->
+         <!--   <router-link to="/home/">  TODO wyrzucić router jak będzie API. -->
               <input type="button" value="Log In" @click="tryLogin" />
-            </router-link>
+         <!--   </router-link> -->
           </form>
         </div>
         <div class="col-5">
           <form class="loginForm effect6">
             <p class="bold">Register to Trellol</p>
-            <input type="text" v-model="login" placeholder="Enter user name..." />
-            <input type="password" v-model="password" placeholder="Enter password..." />
-            <input type="password" v-model="password2" placeholder="Repeat password..." />
+            <input class="text-dark" type="text" v-model="loginRegister" placeholder="Enter user name..." />
+            <input class="text-dark" type="password" v-model="passwordRegister" placeholder="Enter password..." />
+            <input class="text-dark" type="password" v-model="passwordRegister2" placeholder="Repeat password..." />
 
-            <router-link to="/home/"> <!-- TODO wyrzucić routet jak będzie API. -->
-              <input type="button" value="Register" @click="tryLogin" />
-            </router-link>
+            <!--<router-link to="/home/">  TODO wyrzucić routet jak będzie API. -->
+              <input type="button" value="Register" @click="tryRegister" />
+          <!--  </router-link> -->
           </form>
         </div>
       </div>
@@ -37,8 +37,10 @@ export default {
   data () {
     return {
       login: '',
+      loginRegister: '',
       password: '',
-      password2: '',
+      passwordRegister: '',
+      passwordRegister2: '',
       menu: 1
     }
   },
@@ -50,30 +52,43 @@ export default {
         this.menu = 1;
     },
     tryLogin: function() {
-      api.fetchLogin('admin', 'admin')
+      if(!this.login || !this.password) {
+        // Pola są puste
+      } else {
+        api.fetchLogin(this.login, this.password)
           .then(response => {
-             console.log('response POST Login:', response)
-             if(response.status = 201) {
-               console.log('trololololol')
-               this.$router.push('home');
-             }
+            console.log('response POST Login:', response)
+            if(response.status = 201) {
+              console.log('Logowanie udane!')
+              this.$router.push('home');
+    //         console.log(response.data.access_token) // token
+            }
           })
           .catch(e => {
             console.log('Error POST Login:', e.message)
           })
+      }
     },
     tryRegister: function() {
-        api.fetchRegister('test', 'test')
+      if(!this.passwordRegister || !this.passwordRegister2 || !this.loginRegister) {
+        // Pola są puste
+      } else if(this.passwordRegister != this.passwordRegister2) {
+        // Hasła są różne.
+      } else if(this.passwordRegister == this.passwordRegister2) {
+        api.fetchRegister(this.loginRegister, this.passwordRegister)
           .then(response => {
-             console.log('response POST Login:', response)
+             console.log('response POST Register:', response)
              if(response.status = 201) {
-               console.log('trololololol')
+               console.log('Rejestracja udana.')
                this.menu = 1;
              }
           })
           .catch(e => {
-            console.log('Error POST Login:', e.message)
+            console.log('Error POST Register:', e.message)
           })
+      } else {
+        // inny problem.
+      }
     }
   }
 }
