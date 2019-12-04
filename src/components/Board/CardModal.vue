@@ -1,62 +1,99 @@
 <template>
   <transition v-if="showModalAttr" name="modal">
-    <div class="CardModal">
+    <div class="CardModal crossed">
         <div class="modal-wrapper">
             <div class="modal-container" @click="hideAll" >
               <div class="container">
                 <div class="row">
                   <div class="col-9">
-                    <p class="cardName">{{item.name}}</p>
-                  </div>
-                  <div class="col-1 offset-1">
-                    <button @click="closeModal">Close</button>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-9">
-                    <span class="smallListName">on list: {{listName}}</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-9">
-                    <span class="sectionHeader">Description</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-9">
-                    <p v-if="editDescription === false" @click="toggleEditDescription" class="descriptionP">{{item.description}}</p>
-                    <textarea v-if="editDescription === true" v-model="item.description" class="textareaLol"></textarea>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-9">
-                    <span class="sectionHeader">Activity</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-9">
-                    <div class="newCommentElements">
-                      <input type="text" class="newCommentInput" v-model="newCommentValue" placeholder="Enter comment.." @click="showButtons" /><br>
-                      <input v-if="isCommentActive" type="button" class="newCommentButton" value="Add comment" @click="addComment" />
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="cardName">{{item.name}}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <span class="smallListName">on list: {{listName}}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <span class="sectionHeader">Description</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <p v-if="editDescription === false" @click="toggleEditDescription" class="descriptionP">{{item.description}}</p>
+                          <textarea v-if="editDescription === true" v-model="item.description" class="textareaLol"></textarea>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <span class="sectionHeader">Activity</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="newCommentElements">
+                            <input type="text" class="newCommentInput" v-model="newCommentValue" placeholder="Enter comment.." @click="showButtons" /><br>
+                            <input v-if="isCommentActive" type="button" class="newCommentButton" value="Add comment" @click="addComment" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="commentsView">
+                            <div v-for="(comment, i) in comments" v-bind:key={i}>
+                              <div class="container" style="margin-top: 8px">
+                                <div class="col-12">
+                                  <div class="row commentAuthor">
+                                    {{comment.commentAuthor}}
+                                  </div>
+                                  <div class="row commentBox">
+                                    {{comment.commentContent}}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row" v-for="(comment, i) in comments">
-                  <div class="container">
-                    <div class="col-9" v-bind:key={i}>
-                      <div class="row commentAuthor">
-                        {{comment.commentAuthor}}
+                  <div class="col-3">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-1 float-right">
+                          <i class="fas fa-times" style="margin-left: 80px;" @click="closeModal"></i>
+                        </div>
                       </div>
-                      <div class="row commentBox">
-                        {{comment.commentContent}}
+                      <div class="row">
+                        <p class="actions">Actions</p>
+                      </div>
+                      <div class="row">
+                        <ul class="menu">
+                          <li v-if="this.isArchive === false" class=" selected" @click="archive">
+                              <span class="color-dark font-bold">
+                                  <i class="fas fa-archive"></i>
+                                  &nbsp;Archive
+                              </span>
+                          </li>
+                          <li v-if="this.isArchive === true" class=" selected" @click="restoreCard">
+                              <span class="color-dark font-bold">
+                                  <i class="fas fa-trash-restore"></i>
+                                  &nbsp;Restore
+                              </span>
+                          </li>
+                          <li v-if="this.isArchive === true" class=" selected redBg" @click="deleteCard">
+                              <span class="color-dark font-bold">
+                                  <i class="fas fa-trash"></i>
+                                  &nbsp;Delete
+                              </span>
+                          </li>
+                      </ul>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-9">
-
                   </div>
                 </div>
               </div>
@@ -83,27 +120,42 @@ export default {
   name: 'CardModal',
   data () {
     return {
-        editDescription: false,
-        showModalAttr: false,
-        itemId: null,
-        listName: '',
-        item: {},
-        newCommentValue: '',
-        isCommentActive: false,
-        comments: [
-          {
-            commentId: 'xd1',
-            commentAuthor: 'Dawikk',
-            commentContent: 'Komentarz lol',
-            commentDate: '',
-            commentAttachment: {}
-          }
-        ]
+      editDescription: false,
+      showModalAttr: false,
+      isArchive: false,
+      itemId: null,
+      listName: '',
+      item: {},
+      newCommentValue: '',
+      isCommentActive: false,
+      comments: [
+      ]
     }
   },
   methods:{
+    restoreCard: function(){
+      this.$emit('restoreCard', this.itemId);
+    },
+    deleteCard: function(){
+      this.$emit('deleteCard', this.itemId);
+      this.showModalAttr = false;
+    },
+    archive: function(){
+      this.isArchive = true;
+      this.$emit('archiveCard', this.itemId);
+    },
     addComment: function(){
-
+      if(this.newCommentValue !== ''){
+        var comment = {
+          commentId: 'xd2',
+          commentAuthor: 'Dawikk',
+          commentContent: this.newCommentValue,
+          commentDate: '',
+          commentAttachment: {}
+        }
+        this.newCommentValue = '';
+        this.$emit('addComment', this.itemId, comment);
+      }
     },
     hideAll: function(event){
       if(event.target.className != 'newCommentInput')
@@ -117,31 +169,44 @@ export default {
         this.isCommentActive = true;
     },
       showModal: function(itemId, item, listName){
-          this.showModalAttr = true;
-          this.itemId = itemId;
-          this.item = item;
-          this.listName = listName;
+        this.comments = item.comments;
+        this.newCommentValue = '';
+        this.showModalAttr = true;
+        this.itemId = itemId;
+        this.item = item;
+        this.listName = listName;
+        this.isArchive = item.state === 'active' ? false : true;
       },
       closeModal: function(){
-          this.showModalAttr = false;
+        this.showModalAttr = false;
       },
       toggleEditDescription: function(event){
         if(event.target.className == 'descriptionP')
           this.editDescription = true;
       },
       saveDescription: function(){
-          this.$emit('saveDescription', this.itemId, this.item.description);
-          this.toggleEditDescription();
+        this.$emit('saveDescription', this.itemId, this.item.description);
+        this.toggleEditDescription();
       },
       removeCard: function(){
-          this.closeModal();
-          this.$emit('removeCard', this.itemId);
+        this.closeModal();
+        this.$emit('removeCard', this.itemId);
       }
   }
 }
 </script>
 
 <style scoped>
+.commentsView{
+  height: 280px;
+  max-height: 280px;
+  overflow:auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.mt-5{
+  margin-top: 1px;
+}
 .newCommentElements{
   border: 2px solid rgba(0,0,0,0.1);
   border-radius: 4px;
@@ -277,4 +342,45 @@ export default {
     border-radius: 4px;
     font-size: 14px;
   }
+  .color-dark{
+    color: #172b4d;
+}
+
+.font-bold{
+  font-weight: 500;
+}
+ul.menu{
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ul.menu li{
+  display: block;
+  padding: 5px 9px;
+}
+
+ul.menu li:hover{
+  background: #E7E9ED;
+  cursor: pointer;
+}
+.redBg{
+  background-color: #CC7590;
+  color: #FFFFFF;
+}
+.redBg:hover{
+  background-color: #E98FAB!important;
+}
+.actions{
+  padding: 0;
+  margin: 5px 0 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+.fa-times{
+  text-align: right;
+  font-size: 24px;
+  cursor: pointer;
+}
 </style>

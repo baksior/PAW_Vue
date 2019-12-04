@@ -7,12 +7,13 @@
                     <input type="text" v-model="item.name" class="transparentInput" />
                     <draggable class="list-group" :list="item.list" group="people" @change="log">
                         <div
-                            class="list-group-item"
                             v-for="(element, index) in item.list"
                             :key="index"
                             @click="showCard(index, element, i, item.name)"
                         >
-                        {{ element.name }}
+                            <div v-if="element.state === 'active'" class="list-group-item">
+                                {{ element.name }}
+                            </div>
                         </div>
                     </draggable>
                     <div class="addCardForm" v-if="item.addCardForm === true">
@@ -29,7 +30,7 @@
                     <button @click="addList">Add list</button>
                 </div>
 
-                <CardModal @removeCard="removeCard" @saveDescription="saveDescription" ref="cardModal" />
+                <CardModal @removeCard="removeCard" @saveDescription="saveDescription" @addComment="addComment" @archiveCard="archiveCard" @deleteCard="deleteCard" @restoreCard="restoreCard" ref="cardModal" />
             </div>
         </div>
         
@@ -63,10 +64,43 @@ export default {
                 newCardName: '',
                 name: 'Lista 1',
                 list: [
-                    { name: "John", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.', id: 1 },
-                    { name: "Joao", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 2 },
-                    { name: "Jean", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 3 },
-                    { name: "Gerard", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 4 }
+                    { name: "John", 
+                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+                      id: 1,
+                      comments: [
+                        {
+                            commentId: 'xd2',
+                            commentAuthor: 'Dawikk',
+                            commentContent: 'Testowy komentarz',
+                            commentDate: '',
+                            commentAttachment: [
+                            ]
+                        }
+                      ],
+                      attachment: [
+
+                      ],
+                      state: 'active'
+                    },
+                    { name: "John 2", 
+                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+                      id: 2,
+                      comments: [
+                        {
+                            commentId: 'xd2',
+                            commentAuthor: 'Dawikk',
+                            commentContent: 'Drugi komentarz',
+                            commentDate: '',
+                            commentAttachment: [
+                                
+                            ]
+                        }
+                      ],
+                      attachment: [
+
+                      ],
+                      state: 'active'
+                    },
                 ]
             },
             {
@@ -74,16 +108,62 @@ export default {
                 addCardForm: false,
                 newCardName: '',
                 list: [
-                    { name: "John", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 1 },
-                    { name: "Joao", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 2 },
-                    { name: "Jean", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',  id: 3 },
-                    { name: "Gerard", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',id: 4 }
+                    { name: "John 5", 
+                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+                      id: 4,
+                      comments: [
+                        {
+                            commentId: 'xd2',
+                            commentAuthor: 'Dawikk',
+                            commentContent: 'Trzeci komentarz',
+                            commentDate: '',
+                            commentAttachment: [
+                                
+                            ]
+                        }
+                      ],
+                      attachment: [
+
+                      ],
+                      state: 'active'
+                    },
+                    { name: "John 8", 
+                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+                      id: 3,
+                      comments: [
+                        {
+                            commentId: 'xd2',
+                            commentAuthor: 'Dawikk',
+                            commentContent: 'Czwarty komentarz',
+                            commentDate: '',
+                            commentAttachment: [
+                                
+                            ]
+                        }
+                      ],
+                      attachment: [
+
+                      ],
+                      state: 'active'
+                    }
                 ]
             }
         ]
     };
   },
   methods: {
+      archiveCard: function(index){
+        this.lists[this.cardId].list[index].state = 'archive';
+      },
+      restoreCard: function(index){
+        this.lists[this.cardId].list[index].state = 'active';
+      },
+      deleteCard: function(index){
+       this.lists[this.cardId].list.splice(index, 1);
+      },
+      addComment: function(index, comment){
+          this.lists[this.cardId].list[index].comments.push(comment);
+      },
       saveDescription: function(index, description){
           this.lists[this.cardId].list[index].description = description;
       },
