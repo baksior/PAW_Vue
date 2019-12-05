@@ -95,7 +95,7 @@ export default {
   },
   // beforeMount () {
     mounted () {
-        api.fetchGetBoards()
+        api.fetchGetBoards() // fetchGetBoardsWithToken
         .then(response => {
            // console.log('respones from api:', response);
             this.boards = response.data;

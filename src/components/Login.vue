@@ -53,7 +53,7 @@ export default {
     },
     tryLogin: function() {
       if(!this.login || !this.password) {
-        // Pola są puste
+        alert("Pola nie mogą być puste!")
       } else {
         api.fetchLogin(this.login, this.password)
           .then(response => {
@@ -62,18 +62,20 @@ export default {
               console.log('Logowanie udane!')
               this.$router.push('home');
     //         console.log(response.data.access_token) // token
+              sessionStorage.setItem('token', response.data.access_token)
             }
           })
           .catch(e => {
             console.log('Error POST Login:', e.message)
+            alert("Coś poszło nie tak.")
           })
       }
     },
     tryRegister: function() {
       if(!this.passwordRegister || !this.passwordRegister2 || !this.loginRegister) {
-        // Pola są puste
+        alert("Pola nie mogą być puste!")
       } else if(this.passwordRegister != this.passwordRegister2) {
-        // Hasła są różne.
+        alert("Podane hasła różnią się od siebie.")
       } else if(this.passwordRegister == this.passwordRegister2) {
         api.fetchRegister(this.loginRegister, this.passwordRegister)
           .then(response => {
@@ -85,6 +87,7 @@ export default {
           })
           .catch(e => {
             console.log('Error POST Register:', e.message)
+            alert("Coś poszło nie tak.")
           })
       } else {
         // inny problem.

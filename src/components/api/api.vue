@@ -8,13 +8,27 @@ const instance = axios.create({
   timeout: 2500
 });
 */
-
+const token = sessionStorage.getItem('token')
 export default {
   fetchGetBoards () {
     return axios.get('board/')
   //    .then(response => {
   //      return response.data
   //    })
+  },
+/*
+  Api zwraca ID tablic w formie: [trello.Board : 2, trello.Board : 3, trello.Board : 1]
+  Trzeba odpytać /api/board/id żeby dowiedzieć się co jest w środku
+*/
+  fetchGetBoardsWithToken () {
+  return axios({
+      method: 'get',
+      url: '/api/user/boards',
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: {}
+    });
   },
 
   fetchPostBoard (name) {
