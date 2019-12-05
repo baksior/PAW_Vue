@@ -16,7 +16,10 @@ export default {
   //      return response.data
   //    })
   },
-
+/*
+  Api zwraca ID tablic w formie: [trello.Board : 2, trello.Board : 3, trello.Board : 1]
+  Trzeba odpytać /api/board/id żeby dowiedzieć się co jest w środku
+*/
   fetchGetBoardsWithToken () {
   return axios({
       method: 'get',
