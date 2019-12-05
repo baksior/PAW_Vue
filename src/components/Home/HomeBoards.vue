@@ -37,7 +37,7 @@
                         </router-link>
                     </div>
                     <div class="col-3">
-                        <div class="card bg-nieChceMiSieIJestPoPolnocyAJaPoSilceXd" @click="createBoard">
+                        <div class="card" @click="createBoard">
                             <div class="card-body">
                                 <p class="card-text">Tworzenie tablic już hula :o</p>
                             </div>
@@ -113,6 +113,7 @@ export default {
 .card{
     margin: 5px 0px;
     opacity: 0.9;
+    min-width: 180px;
 }
 
 .card:hover{
