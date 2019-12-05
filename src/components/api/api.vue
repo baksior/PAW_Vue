@@ -8,13 +8,24 @@ const instance = axios.create({
   timeout: 2500
 });
 */
-
+const token = sessionStorage.getItem('token')
 export default {
   fetchGetBoards () {
     return axios.get('board/')
   //    .then(response => {
   //      return response.data
   //    })
+  },
+
+  fetchGetBoardsWithToken () {
+  return axios({
+      method: 'get',
+      url: '/api/user/boards',
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: {}
+    });
   },
 
   fetchPostBoard (name) {
