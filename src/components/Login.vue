@@ -5,8 +5,8 @@
         <div class="col-5 offset-1">
           <form class="loginForm effect6">
             <p class="bold">Login to Trellol</p>
-            <input class="text-dark" type="text" v-model="login" placeholder="admin" /> <!-- TODO wstawić: Enter username... -->
-            <input class="text-dark" type="password" v-model="password" placeholder="admin" /> <!-- TODO wstawić: Enter password... -->
+            <input class="text-dark" type="text" v-model="login" placeholder="me" /> <!-- TODO wstawić: Enter username... -->
+            <input class="text-dark" type="password" v-model="password" placeholder="password" /> <!-- TODO wstawić: Enter password... -->
 
          <!--   <router-link to="/home/">  TODO wyrzucić router jak będzie API. -->
               <input type="button" value="Log In" @click="tryLogin" />
@@ -57,7 +57,7 @@ export default {
       } else {
         api.fetchLogin(this.login, this.password)
           .then(response => {
-            console.log('response POST Login:', response)
+           // console.log('response POST Login:', response)
             if(response.status = 201) {
               console.log('Logowanie udane!')
               this.$router.push('home');
@@ -79,7 +79,7 @@ export default {
       } else if(this.passwordRegister == this.passwordRegister2) {
         api.fetchRegister(this.loginRegister, this.passwordRegister)
           .then(response => {
-             console.log('response POST Register:', response)
+           //  console.log('response POST Register:', response)
              if(response.status = 201) {
                console.log('Rejestracja udana.')
                this.menu = 1;
