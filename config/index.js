@@ -74,6 +74,6 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   devServer: {
-    proxy: 'https://localhost:8090',
+    proxy: 'http://193.107.91.69:8080', // https://localhost:8090
   }
 }

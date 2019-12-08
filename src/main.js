@@ -6,7 +6,7 @@ import axios from 'axios'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://localhost:8090/' // api/
+axios.defaults.baseURL = 'http://193.107.91.69:8080/' // api/ // http://localhost:8090/
 // axios.defaults.headers.post['Content-Type'] = 'text/plain'
 
 /* eslint-disable no-new */

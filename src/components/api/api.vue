@@ -37,14 +37,14 @@ export default {
       image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
     })
   },
-
+// text/plain   raw
   fetchLogin (mail, password) {
     return axios({
       method: 'post',
-      url: '/api/login',
+      url: 'api/login',
       data: { username: mail, password: password },
       headers: {
-        'content-type': 'raw'
+        'Content-Type': 'text/plain'
       }
     });
   },
