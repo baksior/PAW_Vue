@@ -27,14 +27,14 @@
             <div class="container mt-4">
                 <div class="row">
                     <div class="col-3" v-bind:key={i} v-for="(item, i) in boards">
-                        <router-link class="nav-link" to="/board/">
-                            <div class="card bg-dark text-white" @click="goToBoard" :param-id="item.name">
+                  <!--      <router-link class="nav-link" to="/board/">     -->
+                            <div class="card bg-dark text-white" @click="goToBoard(item.id)" :param-id="item.id">
                                 <img :src="item.image" class="card-img" alt="title">
                                 <div class="card-img-overlay">
                                     <h6 class="card-title">{{item.title}}</h6>
                                 </div>
                             </div>
-                        </router-link>
+                  <!--      </router-link>      -->
                     </div>
                     <div class="col-3">
                         <div class="card" @click="createBoard">
@@ -87,10 +87,15 @@ export default {
   },
   methods:{
     addBoard(_name) {
-      this.boards.push({ title: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' });
+      this.boards.push({ title: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' })
     },
     createBoard() {
-        this.$emit('showModal');
+        this.$emit('showModal')
+    },
+    goToBoard(_id) {
+        console.log('goToBoard:', _id)
+//        this.$router.push('board/' + _id)
+        this.$router.push({ path: `/board/${_id}` })
     }
   },
   // beforeMount () {

@@ -213,7 +213,10 @@ export default {
         this.lists.push({name: this.newListName, list: [], description: '', addCardForm: false, newCardName: ''});
         this.newListName = "";
     }
-  }
+  },
+   mounted () {
+       console.log("mounted:", this.$router.history.current.params.id)
+   }
 }
 </script>
 
