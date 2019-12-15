@@ -83,6 +83,7 @@ export default {
              if(response.status = 201) {
                console.log('Rejestracja udana.')
                this.menu = 1;
+               alert("Rejstracja powiodła się")
              }
           })
           .catch(e => {
