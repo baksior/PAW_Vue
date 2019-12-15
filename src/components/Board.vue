@@ -55,6 +55,7 @@
 <script>
 import draggable from 'vuedraggable'
 import CardModal from '@/components/Board/CardModal'
+import api from './api/api.vue'
 
 export default {
   name: 'Board',
@@ -67,6 +68,7 @@ export default {
     },
   data () {
     return {
+      tableIDColumn: [],
       editable: true,
       isDragging: true,
       delayedDragging: false,
@@ -215,7 +217,24 @@ export default {
     }
   },
    mounted () {
-       console.log("mounted:", this.$router.history.current.params.id)
+    api.fetchGetBoardsDetails(this.$router.history.current.params.id)
+        .then(responseTitle => {
+            this.boardName = responseTitle.data.title;
+        })
+        .catch(error => {
+            console.log('Error GetBoardsDetails:', error)
+        })
+///
+    console.log("mounted:", this.$router.history.current.params.id)
+    api.fetchGetBoardColumns(this.$router.history.current.params.id)
+        .then(response => {
+            console.log('respones from api:', response.data)
+            this.tableIDColumn = response.data.cards;
+            console.log('table of ID:', this.tableIDColumn);
+        })
+        .catch(error => {
+            console.log('Error GetBoardsDetails:', error)
+        })
    }
 }
 </script>

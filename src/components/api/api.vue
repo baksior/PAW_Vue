@@ -31,7 +31,7 @@ export default {
     });
   },
 
-  fetchPostBoard (name) {
+  fetchPostBoard (name) { // Prawdopodobnie token ?
     return axios.post('board/', {
       title: name,
       image: "http://dawiq.lh.pl/Trellol//images/lolImg.jpg"
@@ -55,8 +55,41 @@ export default {
       url: 'register',
       data: { username: mail, password: password },
       headers: {
-        'Content-Type': 'text/plain'
+        //'Content-Type': 'text/plain'
       }
+    });
+  },
+  fetchGetBoardsDetails (_id) {
+    let url = 'api/board/' + _id
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: {}
+    });
+  },
+  fetchGetBoardColumns (_id) {
+    let url = 'api/board/columns?id=' + _id
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: {}
+    });
+  },
+  fetchPostBoardColumn (_id, name) {
+    let url = 'api/board/columns/create' + _id
+    return axios({
+      method: 'post',
+      url: url,
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: { title: name }
     });
   }
 }
