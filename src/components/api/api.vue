@@ -52,10 +52,10 @@ export default {
   fetchRegister (mail, password) {
     return axios({
       method: 'post',
-      url: '/api/register',
+      url: 'register',
       data: { username: mail, password: password },
       headers: {
-        'content-type': 'raw'
+        'Content-Type': 'text/plain'
       }
     });
   }
