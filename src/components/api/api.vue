@@ -81,6 +81,28 @@ export default {
       data: {}
     });
   },
+  fetchGetColumnCards (_id) {
+    let url = 'api/column/cards?id=' + _id
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: {}
+    });
+  },
+  fetchGetCard (_id) {
+    let url = 'api/card?id=' + _id
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token
+      },
+      data: {}
+    });
+  },
   fetchPostBoardColumn (_id, name) {
     let url = 'api/board/columns/create' + _id
     return axios({

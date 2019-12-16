@@ -69,6 +69,8 @@ export default {
   data () {
     return {
       tableIDColumn: [],
+      columnJSON: [],
+      columnLength: 0,
       editable: true,
       isDragging: true,
       delayedDragging: false,
@@ -224,16 +226,39 @@ export default {
         .catch(error => {
             console.log('Error GetBoardsDetails:', error)
         })
-///
+/// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
     console.log("mounted:", this.$router.history.current.params.id)
     api.fetchGetBoardColumns(this.$router.history.current.params.id)
         .then(response => {
             console.log('respones from api:', response.data)
-            this.tableIDColumn = response.data.cards;
-            console.log('table of ID:', this.tableIDColumn);
+            this.columnJSON = response.data
+            this.columnLength = response.data.length
+            console.log('columnJSON:', this.columnJSON)
         })
         .catch(error => {
             console.log('Error GetBoardsDetails:', error)
+        })
+/// Poniżej: zwraca szczegóły karty (description, isArchived)
+    api.fetchGetCard(this.$router.history.current.params.id)
+        .then(response => {
+            console.log('respones from api Card:', response.data)
+        //    this.columnJSON = response.data
+        //    this.columnLength = response.data.length
+        //    console.log('columnJSON:', this.columnJSON)
+        })
+        .catch(error => {
+            console.log('Error fetchGetCard:', error)
+        })
+/// Poniżej: nie działa, powinno zwracać wszystkie karty w podanej liście (kolumnie)
+    api.fetchGetColumnCards(this.$router.history.current.params.id)
+        .then(response => {
+            console.log('respones from api Column/Cards:', response.data)
+        //    this.columnJSON = response.data
+        //    this.columnLength = response.data.length
+        //    console.log('columnJSON:', this.columnJSON)
+        })
+        .catch(error => {
+            console.log('Error fetchGetColumnCards:', error)
         })
    }
 }
