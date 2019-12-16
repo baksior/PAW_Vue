@@ -55,7 +55,7 @@ export default {
       url: 'register',
       data: { username: mail, password: password },
       headers: {
-        //'Content-Type': 'text/plain'
+        'Content-Type': 'application/json'
       }
     });
   },

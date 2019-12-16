@@ -236,7 +236,7 @@ export default {
             console.log('columnJSON:', this.columnJSON)
         })
         .catch(error => {
-            console.log('Error GetBoardsDetails:', error)
+            console.log('Error fetchGetBoardColumns:', error)
         })
 /// Poniżej: zwraca szczegóły karty (description, isArchived)
     api.fetchGetCard(this.$router.history.current.params.id)
@@ -249,6 +249,7 @@ export default {
         .catch(error => {
             console.log('Error fetchGetCard:', error)
         })
+/*
 /// Poniżej: nie działa, powinno zwracać wszystkie karty w podanej liście (kolumnie)
     api.fetchGetColumnCards(this.$router.history.current.params.id)
         .then(response => {
@@ -260,6 +261,7 @@ export default {
         .catch(error => {
             console.log('Error fetchGetColumnCards:', error)
         })
+*/
    }
 }
 </script>
