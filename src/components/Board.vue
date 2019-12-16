@@ -11,9 +11,11 @@
                             :key="index"
                             @click="showCard(index, element, i, item.name)"
                         >
-                            <div v-if="element.state === 'active'" class="list-group-item">
-                                {{ element.name }}
-                            </div>
+                            <router-link :to="`/board/${index}/card/${i}`">
+                                <div v-if="element.state === 'active'" class="list-group-item">
+                                    {{ element.name }}
+                                </div>
+                            </router-link>
                         </div>
                     </draggable>
                     <div class="addCardForm" v-if="item.addCardForm === true">
@@ -32,9 +34,11 @@
                             :key="index"
                             @click="showCard(index, element, i, item.name)"
                         >
-                            <div v-if="element.state === 'archive'" class="list-group-item">
-                                {{ element.name }}
-                            </div>
+                            <router-link :to="`/board/${index}/card/${i}`">
+                                <div v-if="element.state === 'archive'" class="list-group-item">
+                                 {{ element.name }}
+                                </div>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -61,6 +65,17 @@ export default {
   name: 'Board',
   props: {
       isLogged: Boolean
+  },
+  created(){
+  },
+  mounted(){
+    if(this.$route.params.id && this.$route.params.cardId){
+        var item = this.lists[this.$route.params.id];
+        var element = item.list[this.$route.params.cardId];
+        var index = this.$route.params.cardId;
+        this.$refs.cardModal.showModal(index, element, item.name);
+        this.cardId = this.$route.params.cardId;
+    }
   },
   order: 1,
     components: {
@@ -307,7 +322,12 @@ export default {
   min-height: 20px;
 }
 .list-group-item {
-  cursor: pointer;
+    text-decoration: none;
+    color: #333333;
+    cursor: pointer;
+}
+.list-group-item:hover {
+    text-decoration: none;
 }
 .list-group-item i {
   cursor: pointer;
