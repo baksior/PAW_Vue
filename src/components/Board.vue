@@ -68,15 +68,6 @@ export default {
   },
   created(){
   },
-  mounted(){
-    if(this.$route.params.id && this.$route.params.cardId){
-        var item = this.lists[this.$route.params.id];
-        var element = item.list[this.$route.params.cardId];
-        var index = this.$route.params.cardId;
-        this.$refs.cardModal.showModal(index, element, item.name);
-        this.cardId = this.$route.params.cardId;
-    }
-  },
   order: 1,
     components: {
         draggable, CardModal
@@ -234,6 +225,14 @@ export default {
     }
   },
    mounted () {
+    if(this.$route.params.id && this.$route.params.cardId){
+        var item = this.lists[this.$route.params.id];
+        var element = item.list[this.$route.params.cardId];
+        var index = this.$route.params.cardId;
+        this.$refs.cardModal.showModal(index, element, item.name);
+        this.cardId = this.$route.params.cardId;
+    }
+
     api.fetchGetBoardsDetails(this.$router.history.current.params.id)
         .then(responseTitle => {
             this.boardName = responseTitle.data.title;
