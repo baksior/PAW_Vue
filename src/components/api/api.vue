@@ -55,6 +55,7 @@ export default {
       url: 'register',
       data: { username: mail, password: password },
       headers: {
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       }
     });
@@ -73,7 +74,7 @@ export default {
   fetchGetBoardColumns (_id) {
     let url = 'api/board/columns?id=' + _id
     return axios({
-      method: 'get',
+      method: 'GET',
       url: url,
       headers: {
         'X-Auth-Token': token
@@ -94,6 +95,7 @@ export default {
   },
   fetchGetCard (_id) {
     let url = 'api/card?id=' + _id
+    console.log("url from GetCard", url)
     return axios({
       method: 'get',
       url: url,
