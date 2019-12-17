@@ -56,7 +56,7 @@ export default {
       data: { username: mail, password: password },
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
   },
