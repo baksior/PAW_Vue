@@ -88,6 +88,8 @@ export default {
           })
           .catch(e => {
             console.log('Error POST Register:', e.message)
+            console.log('Status POST Register', e.status); // undefined
+            console.log('Code POST Register', e.code); // undefined
             alert("Coś poszło nie tak.")
           })
       } else {
