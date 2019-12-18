@@ -23,7 +23,8 @@ export default {
       method: 'GET',
       url: 'api/user/boards',
       headers: {
-        'X-Auth-Token': token
+        'X-Auth-Token': token,
+        'Content-Type': 'application/json'
       },
       data: {}
     })

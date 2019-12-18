@@ -66,6 +66,7 @@ export default {
               sessionStorage.setItem('token', response.data.access_token)
               let test = sessionStorage.getItem('token')
               console.log('test toekn:', test)
+              // localStorage.setItem('tokenLocal', response.data.access_token)
             }
           })
           .catch(e => {
