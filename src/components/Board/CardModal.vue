@@ -281,21 +281,12 @@ export default {
     addLabel: function(){
       if(this.newLabel.labelBackground !== ''){
         var model = {
-          id: 'label1',
+          id: 'label87',
           labelTitle: this.newLabel.labelTitle,
           labelBackground: this.newLabel.labelBackground
         }
-
-        this.labels.push(model);
-        this.newLabel.labelBackground = '';
-        this.newLabel.labelTitle = '';
-      }else{
-        var model = {
-          id: 'label1',
-          labelTitle: this.newLabel.labelTitle,
-          labelBackground: this.newLabel.labelBackground
-        }
-        this.labels.push(model);
+        this.cardLabels.push(model);
+        this.$emit('addLabel', this.itemId, this.newLabel);
         this.newLabel.labelBackground = '';
         this.newLabel.labelTitle = '';
       }
@@ -437,6 +428,9 @@ export default {
   border-radius: 5px;
   float: left;
   opacity: 1;
+  height: 27px;
+  min-width: 40px;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -455,6 +449,7 @@ export default {
   cursor: pointer;
   border-radius: 10px;
   margin-top: 5px;
+  height: 32px;
 }
 
 .labels{
