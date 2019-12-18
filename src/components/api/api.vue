@@ -8,7 +8,7 @@ const instance = axios.create({
   timeout: 2500
 });
 */
-let token = sessionStorage.getItem('token')
+// let token = sessionStorage.getItem('token')
 export default {
   fetchGetBoards () {
     return axios.get('board/')
@@ -18,6 +18,7 @@ export default {
   Trzeba odpytać /api/board/id żeby dowiedzieć się co jest w środku --> Pojawiły się kolumny!
   */
   fetchGetBoardsWithToken () {
+    let token = sessionStorage.getItem('token')
     return axios({
       method: 'GET',
       url: 'api/user/boards',
@@ -36,6 +37,7 @@ export default {
   },
 
   fetchPostBoardWithToken (name) { // Prawdopodobnie token ?
+    let token = sessionStorage.getItem('token')
     console.log('token (fetchPostBoardWithToken):', token)
     return axios({
       method: 'POST',
@@ -70,6 +72,7 @@ export default {
     })
   },
   fetchGetBoardsDetails (_id) {
+    let token = sessionStorage.getItem('token')
     let url = 'api/board/' + _id
     return axios({
       method: 'get',
@@ -81,6 +84,7 @@ export default {
     })
   },
   fetchGetBoardColumns (_id) {
+    let token = sessionStorage.getItem('token')
     let url = 'api/board/columns?id=' + _id
     return axios({
       method: 'GET',
@@ -92,6 +96,7 @@ export default {
     })
   },
   fetchGetColumnCards (_id) {
+    let token = sessionStorage.getItem('token')
     let url = 'api/column/cards?id=' + _id
     return axios({
       method: 'get',
@@ -103,6 +108,7 @@ export default {
     })
   },
   fetchGetCard (_id) {
+    let token = sessionStorage.getItem('token')
     let url = 'api/card?id=' + _id
     console.log('url from GetCard', url)
     return axios({
@@ -116,6 +122,7 @@ export default {
     })
   },
   fetchPostBoardColumn (_id, name) {
+    let token = sessionStorage.getItem('token')
     let url = 'api/board/columns/create' + _id
     return axios({
       method: 'post',
