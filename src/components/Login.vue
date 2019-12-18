@@ -52,19 +52,19 @@ export default {
         this.menu = 1;
     },
     tryLogin: function() {
-      if(!this.login || !this.password) {
-        alert("Pola nie mogą być puste!")
+      if (!this.login || !this.password) {
+        alert('Pola nie mogą być puste!')
       } else {
         api.fetchLogin(this.login, this.password)
           .then(response => {
           // console.log('response POST Login:', response)
-            if(response.status = 201) {
+            // if (response.status = 201) { // To nie powinno tak być. :<
               console.log('Logowanie udane!')
-              this.$router.push('home');
+              this.$router.push('home')
               console.log(response.data.access_token) // token
               sessionStorage.removeItem('token')
               sessionStorage.setItem('token', response.data.access_token)
-            }
+            // }
           })
           .catch(e => {
             console.log('Error POST Login:', e.message)
