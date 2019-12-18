@@ -42,7 +42,7 @@ export default {
     return axios({
       method: 'POST',
       url: 'api/board', // api/user/boards
-      data: { title: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
+      data: { title: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', state: 'active' },
       headers: {
         'X-Auth-Token': token
       }
@@ -131,6 +131,32 @@ export default {
         'X-Auth-Token': token
       },
       data: { title: name }
+    })
+  },
+  fetchGetComments () {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/comment'
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: {}
+    })
+  },
+  fetchGetCardComments () {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/card/comments?id=1'
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: {}
     })
   }
 }

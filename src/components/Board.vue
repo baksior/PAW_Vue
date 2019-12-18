@@ -76,6 +76,7 @@ export default {
     return {
       tableIDColumn: [],
       columnJSON: [],
+      tableIDCard: [],
       columnLength: 0,
       editable: true,
       isDragging: true,
@@ -279,8 +280,8 @@ export default {
     createCard: function (item) {
       this.closeAddCardForm(item)
       var element = this.lists[item]
-      var newElement = {name: element.newCardName, id: element.list.length}
-
+      var newElement = {name: element.newCardName, id: element.list.length, description: 'Test', comments: [], attachment: [], labels: [], state: 'active'}
+console.log(newElement)
       element.list.push(newElement)
       element.newCardName = ''
     },
@@ -297,6 +298,9 @@ export default {
       this.newListName = ''
     }
   },
+  beforeMount () {
+
+  },
   mounted () {
     api.fetchGetBoardsDetails(this.$router.history.current.params.id)
       .then(responseTitle => {
@@ -306,7 +310,8 @@ export default {
         console.log('Error GetBoardsDetails:', error)
       })
     /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
-    console.log('mounted:', this.$router.history.current.params.id)
+    console.log('mounted:', this.$route.params.id) // this.$router.history.current.params.id
+    
     api.fetchGetBoardColumns(this.$router.history.current.params.id)
       .then(response => {
         console.log('respones from api:', response.data)
@@ -317,6 +322,7 @@ export default {
       .catch(error => {
         console.log('Error fetchGetBoardColumns:', error)
       })
+
     /// Poniżej: zwraca szczegóły karty (description, isArchived)
     api.fetchGetCard(this.$router.history.current.params.id)
       .then(response => {
@@ -327,6 +333,27 @@ export default {
       })
       .catch(error => {
         console.log('Error fetchGetCard:', error)
+      })
+      /// s
+    api.fetchGetComments()
+      .then(response => {
+        console.log('respones from api Comment:', response.data)
+        //    this.columnJSON = response.data
+        //    this.columnLength = response.data.length
+        //    console.log('columnJSON:', this.columnJSON)
+      })
+      .catch(error => {
+        console.log('Error fetchGetCard:', error)
+      })
+    api.fetchGetCardComments() // przesłać ID karty
+      .then(response => {
+        console.log('respones from api Card/Comments:', response.data)
+        //    this.columnJSON = response.data
+        //    this.columnLength = response.data.length
+        //    console.log('columnJSON:', this.columnJSON)
+      })
+      .catch(error => {
+        console.log('Error fetchGetCardComments:', error)
       })
     /*
 /// Poniżej: nie działa, powinno zwracać wszystkie karty w podanej liście (kolumnie)
@@ -341,6 +368,7 @@ export default {
             console.log('Error fetchGetColumnCards:', error)
         })
 */
+
     if (this.$route.params.id && this.$route.params.cardId) {
       var item = this.lists[this.$route.params.id]
       var element = item.list[this.$route.params.cardId]
