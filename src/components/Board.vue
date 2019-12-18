@@ -93,7 +93,7 @@ export default {
     changeBoardName: function () {
       api.fetchPutBoardName(this.$route.params.id, this.boardName)
         .then(response => {
-          console.log('respones from api fetchPutBoardName:', response.data)
+          // console.log('respones from api fetchPutBoardName:', response.data)
         })
         .catch(error => {
           console.log('Error fetchGetColumnCards:', error)
