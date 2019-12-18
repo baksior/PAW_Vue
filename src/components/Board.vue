@@ -9,9 +9,9 @@
                         <div
                             v-for="(element, index) in item.list"
                             :key="index"
-                            @click="showCard(index, element, i, item.name)"
+                            @click="showCard(element.id, element, item.id, item.name)"
                         >
-                            <router-link :to="`/board/${$route.params.listId}/list/${element.id}/card/${item.id}`">
+                            <router-link :to="`/board/${$route.params.id}/list/${item.id}/card/${element.id}`">
                                 <div v-if="element.state === 'active'" class="list-group-item">
                                     {{ element.name }}
                                 </div>
@@ -89,29 +89,68 @@ export default {
     }
   },
   methods: {
+    getListById: function(id){
+      console.log('okej', this.lists);
+      for(let i = 0; i < this.lists.length; i++){
+        let obj = this.lists[i];
+        if(obj.id === id){
+          return obj;
+        }
+      }
+      return null;
+    },
+    getCardById: function(id, data){
+      for(let i = 0; i < data.list.length; i++){
+        let obj = data.list[i];
+        if(obj.id === id){
+          return obj;
+        }
+      }
+      console.log('nie dziala')
+      return null;
+    },
     archiveCard: function (index) {
-      this.lists[this.cardId].list[index].state = 'archive'
+      var list = this.getListById(this.cardId);
+      var card = this.getCardById(index, list);
+      card.state = 'archive';
     },
     restoreCard: function (index) {
-      this.lists[this.cardId].list[index].state = 'active'
+      var list = this.getListById(this.cardId);
+      var card = this.getCardById(index, list);
+      card.state = 'active'
     },
     deleteCard: function (index) {
-      this.lists[this.cardId].list.splice(index, 1)
+      var list = this.getListById(this.cardId);
+      list.list.splice(index, 1)
     },
     addComment: function (index, comment) {
-      this.lists[this.cardId].list[index].comments.push(comment)
+      var list = this.getListById(this.cardId);
+      var card = this.getCardById(index, list);
+      card.comments.push(comment)
     },
     saveDescription: function (index, description) {
-      this.lists[this.cardId].list[index].description = description
+      var list = this.getListById(this.cardId);
+      var card = this.getCardById(index, list);
+      card.description = description
     },
     removeCard: function (index) {
-      this.lists[this.cardId].list.splice(index, 1)
+      var list = this.getListById(this.cardId);
+      list.list.splice(index, 1)
     },
     removeList: function (index) {
-      this.lists.splice(index, 1)
+      var list = this.getListById(this.cardId);
+      list.splice(index, 1)
     },
     showCard: function (index, element, cardId, listName) {
-      var cardLabels = this.lists[index].list[cardId].labels
+      console.log('element', element);
+      console.log('cardId', cardId);
+      console.log('index', index);
+      var list = this.getListById(cardId);
+      var card = this.getCardById(index, list);
+
+      console.log('card', card);
+
+      var cardLabels = card.labels
 
       var allLabels = []
 
@@ -133,7 +172,7 @@ export default {
       this.cardId = cardId
 
       let token = sessionStorage.getItem('token')
-      let url = 'api/card/' + this.lists[index].list[cardId].id
+      let url = 'api/card/' + card.id
       var sendAttachmentResponse = axios({
         method: 'get',
         url: url,
@@ -145,7 +184,7 @@ export default {
       }).then((value) => {
         console.log('index', index);
         console.log('okej', value);
-        var attachments = this.lists[index].list[cardId].attachments;
+        var attachments = card.attachments;
 
         this.$refs.cardModal.showModal(index, element, listName, cardLabels, allLabels, attachments)
       }).catch(function(error) {
