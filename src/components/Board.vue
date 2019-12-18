@@ -1,7 +1,7 @@
 <template>
     <div class="Tablica">
         <div class="boardContent">
-            <input type="text" class="boardTitle transparentInput" v-model="boardName" />
+            <input type="text" class="boardTitle transparentInput" v-model="boardName" @change="changeBoardName" />
             <div class="boards">
                 <div class="board" v-for="(item, i) in lists">
                     <input type="text" v-model="item.name" class="transparentInput" />
@@ -90,6 +90,15 @@ export default {
     }
   },
   methods: {
+    changeBoardName: function () {
+      api.fetchPutBoardName(this.$route.params.id, this.boardName)
+        .then(response => {
+          console.log('respones from api fetchPutBoardName:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchGetColumnCards:', error)
+        })
+    },
     archiveCard: function (index) {
       this.lists[this.cardId].list[index].state = 'archive'
     },

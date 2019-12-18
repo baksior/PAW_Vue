@@ -159,6 +159,19 @@ export default {
       },
       data: {}
     })
+  },
+  fetchPutBoardName (_id, title) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/board/' + _id
+    return axios({
+      method: 'PUT',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: { title: title }
+    })
   }
 }
 </script>
