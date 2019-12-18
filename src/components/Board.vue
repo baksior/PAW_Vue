@@ -25,7 +25,7 @@
                     <button class="addCardButton" @click="showAddCardForm(i)" v-if="item.addCardForm === false">Add card</button>
                     <button class="addCardButton" @click="removeList(i)" v-if="item.addCardForm === false">Remove list</button>
                 </div>
-            
+
                 <div class="board">
                     <input type="text" value="Old ones" class="transparentInput" />
                     <div  v-for="(item, i) in lists">
@@ -52,7 +52,7 @@
                 <CardModal @removeCard="removeCard" @saveDescription="saveDescription" @addComment="addComment" @archiveCard="archiveCard" @deleteCard="deleteCard" @restoreCard="restoreCard" ref="cardModal" />
             </div>
         </div>
-        
+
     </div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
   props: {
     isLogged: Boolean
   },
-  created() {
+  created () {
   },
   order: 1,
   components: {
@@ -89,7 +89,7 @@ export default {
           newCardName: '',
           name: 'Lista 1',
           list: [
-            { name: "John",
+            { name: 'John',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
               id: 1,
               comments: [
@@ -119,7 +119,7 @@ export default {
               ],
               state: 'active'
             },
-            { name: "John 2", 
+            { name: 'John 2',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
               id: 2,
               comments: [
@@ -148,7 +148,7 @@ export default {
                 }
               ],
               state: 'active'
-            },
+            }
           ]
         },
         {
@@ -156,7 +156,7 @@ export default {
           addCardForm: false,
           newCardName: '',
           list: [
-            { name: "John 5", 
+            { name: 'John 5',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
               id: 4,
               comments: [
@@ -186,7 +186,7 @@ export default {
               ],
               state: 'active'
             },
-            { name: "John 8",
+            { name: 'John 8',
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
               id: 3,
               comments: [
@@ -222,41 +222,41 @@ export default {
     }
   },
   methods: {
-    archiveCard: function(index) {
+    archiveCard: function (index) {
       this.lists[this.cardId].list[index].state = 'archive'
     },
-    restoreCard: function(index) {
+    restoreCard: function (index) {
       this.lists[this.cardId].list[index].state = 'active'
     },
-    deleteCard: function(index) {
+    deleteCard: function (index) {
       this.lists[this.cardId].list.splice(index, 1)
     },
-    addComment: function(index, comment) {
+    addComment: function (index, comment) {
       this.lists[this.cardId].list[index].comments.push(comment)
     },
-    saveDescription: function(index, description) {
+    saveDescription: function (index, description) {
       this.lists[this.cardId].list[index].description = description
     },
-    removeCard: function(index) {
+    removeCard: function (index) {
       this.lists[this.cardId].list.splice(index, 1)
     },
-    removeList: function(index) {
+    removeList: function (index) {
       this.lists.splice(index, 1)
     },
-    showCard: function(index, element, cardId, listName) {
+    showCard: function (index, element, cardId, listName) {
       var cardLabels = this.lists[cardId].list[index].labels
 
       var allLabels = []
 
       // takie tam kopiowanie na szybko :)
       // mam nadzieje ze sie nie przejmujemy zlozonoscia obliczeniowa xd
-      for(var i = 0; i < this.lists.length; i++) {
-        for(var j = 0; j < this.lists[i].list.length; j++) {
+      for (var i = 0; i < this.lists.length; i++) {
+        for (var j = 0; j < this.lists[i].list.length; j++) {
           // ten wartunek poprawić, ale na razie musi tak być :D
-          if(i != cardId && j != index) {
-            for(var k = 0; k < this.lists[i].list[j].labels.length; k++) {
+          if (i != cardId && j != index) {
+            for (var k = 0; k < this.lists[i].list[j].labels.length; k++) {
               var obj = this.lists[i].list[j].labels[k]
-              if(!this.containsObject(obj, allLabels)) {
+              if (!this.containsObject(obj, allLabels)) {
                 allLabels.push(obj)
               }
             }
@@ -267,7 +267,7 @@ export default {
       this.$refs.cardModal.showModal(index, element, listName, cardLabels, allLabels)
       this.cardId = cardId
     },
-    containsObject(obj, list) {
+    containsObject (obj, list) {
       var i
       for (i = 0; i < list.length; i++) {
         if (list[i] === obj) {
@@ -276,7 +276,7 @@ export default {
       }
       return false
     },
-    createCard: function(item) {
+    createCard: function (item) {
       this.closeAddCardForm(item)
       var element = this.lists[item]
       var newElement = {name: element.newCardName, id: element.list.length}
@@ -284,18 +284,17 @@ export default {
       element.list.push(newElement)
       element.newCardName = ''
     },
-    showAddCardForm: function(item) {
+    showAddCardForm: function (item) {
       this.lists[item].addCardForm = true
     },
-    closeAddCardForm: function(item) {
+    closeAddCardForm: function (item) {
       this.lists[item].addCardForm = false
     },
-    addList: function() {
-      if(this.newListName == '')
-        this.newListName = "New list"
+    addList: function () {
+      if (this.newListName == '') { this.newListName = 'New list' }
 
       this.lists.push({name: this.newListName, list: [], description: '', addCardForm: false, newCardName: ''})
-      this.newListName = ""
+      this.newListName = ''
     }
   },
   mounted () {
@@ -307,7 +306,7 @@ export default {
         console.log('Error GetBoardsDetails:', error)
       })
     /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
-    console.log("mounted:", this.$router.history.current.params.id)
+    console.log('mounted:', this.$router.history.current.params.id)
     api.fetchGetBoardColumns(this.$router.history.current.params.id)
       .then(response => {
         console.log('respones from api:', response.data)
@@ -342,7 +341,7 @@ export default {
             console.log('Error fetchGetColumnCards:', error)
         })
 */
-    if(this.$route.params.id && this.$route.params.cardId) {
+    if (this.$route.params.id && this.$route.params.cardId) {
       var item = this.lists[this.$route.params.id]
       var element = item.list[this.$route.params.cardId]
       var index = this.$route.params.cardId

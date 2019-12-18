@@ -45,7 +45,7 @@ export default {
     }
   },
   methods:{
-    toggleMenu: function(){
+    toggleMenu: function() {
       if(this.menu == 1)
         this.menu = 2;
       else
@@ -57,7 +57,7 @@ export default {
       } else {
         api.fetchLogin(this.login, this.password)
           .then(response => {
-           // console.log('response POST Login:', response)
+          // console.log('response POST Login:', response)
             if(response.status = 201) {
               console.log('Logowanie udane!')
               this.$router.push('home');
