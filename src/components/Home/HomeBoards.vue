@@ -57,12 +57,12 @@ export default {
   name: 'HomeBoards',
   data () {
     return {
-        currentBoard: {
-            name: ''
-        },
-        boards: [
-        ],
-        isLoading: false,
+      currentBoard: {
+        name: ''
+      },
+      boards: [
+      ],
+      isLoading: false,
     }
     /*     { name: 'Tablica 1', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', lastSeen: true },
             { name: 'Tablica 2', image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
@@ -85,14 +85,14 @@ export default {
     }
     */
   },
-  methods:{
-    addBoard(_name) {
+  methods: {
+    addBoard (_name) {
       this.boards.push({ title: _name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' })
     },
-    createBoard() {
-        this.$emit('showModal')
+    createBoard () {
+      this.$emit('showModal')
     },
-    goToBoard(_id) {
+    goToBoard (_id) {
         console.log('goToBoard:', _id)
 //        this.$router.push('board/' + _id)
         this.$router.push({ path: `/board/${_id}` })
@@ -100,10 +100,10 @@ export default {
   },
   // beforeMount () {
     mounted () {
-        api.fetchGetBoards() // fetchGetBoardsWithToken
+        api.fetchGetBoardsWithToken() // fetchGetBoardsWithToken // fetchGetBoards
         .then(response => {
            // console.log('respones from api:', response);
-            this.boards = response.data;
+            this.boards = response.data
             // console.log('boards:', this.boards);
         })
         .catch(error => {

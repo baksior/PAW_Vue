@@ -64,14 +64,14 @@ import api from './api/api.vue'
 export default {
   name: 'Board',
   props: {
-      isLogged: Boolean
+    isLogged: Boolean
   },
   created(){
   },
   order: 1,
-    components: {
-        draggable, CardModal
-    },
+  components: {
+    draggable, CardModal
+  },
   data () {
     return {
       tableIDColumn: [],
@@ -83,179 +83,179 @@ export default {
       cardId: -1,
       boardName: 'Tablica',
       newListName: '',
-        lists: [
-            {
-                addCardForm: false,
-                newCardName: '',
-                name: 'Lista 1',
-                list: [
-                    { name: "John", 
-                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-                      id: 1,
-                      comments: [
-                        {
-                            commentId: 'xd2',
-                            commentAuthor: 'Dawikk',
-                            commentContent: 'Testowy komentarz',
-                            commentDate: '',
-                            commentAttachment: [
-                            ]
-                        }
-                      ],
-                      attachment: [
+      lists: [
+        {
+          addCardForm: false,
+          newCardName: '',
+          name: 'Lista 1',
+          list: [
+            { name: "John", 
+              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+              id: 1,
+              comments: [
+                {
+                  commentId: 'xd2',
+                  commentAuthor: 'Dawikk',
+                  commentContent: 'Testowy komentarz',
+                  commentDate: '',
+                  commentAttachment: [
+                  ]
+                }
+              ],
+              attachment: [
 
-                      ],
-                      state: 'active'
-                    },
-                    { name: "John 2", 
-                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-                      id: 2,
-                      comments: [
-                        {
-                            commentId: 'xd2',
-                            commentAuthor: 'Dawikk',
-                            commentContent: 'Drugi komentarz',
-                            commentDate: '',
-                            commentAttachment: [
-                                
-                            ]
-                        }
-                      ],
-                      attachment: [
-
-                      ],
-                      state: 'active'
-                    },
-                ]
+              ],
+              state: 'active'
             },
-            {
-                name: 'Lista 2',
-                addCardForm: false,
-                newCardName: '',
-                list: [
-                    { name: "John 5", 
-                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-                      id: 4,
-                      comments: [
-                        {
-                            commentId: 'xd2',
-                            commentAuthor: 'Dawikk',
-                            commentContent: 'Trzeci komentarz',
-                            commentDate: '',
-                            commentAttachment: [
+            { name: "John 2", 
+              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+              id: 2,
+              comments: [
+                {
+                  commentId: 'xd2',
+                  commentAuthor: 'Dawikk',
+                  commentContent: 'Drugi komentarz',
+                  commentDate: '',
+                  commentAttachment: [
                                 
-                            ]
-                        }
-                      ],
-                      attachment: [
+                  ]
+                }
+              ],
+              attachment: [
 
-                      ],
-                      state: 'active'
-                    },
-                    { name: "John 8", 
-                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-                      id: 3,
-                      comments: [
-                        {
-                            commentId: 'xd2',
-                            commentAuthor: 'Dawikk',
-                            commentContent: 'Czwarty komentarz',
-                            commentDate: '',
-                            commentAttachment: [
+              ],
+              state: 'active'
+            },
+          ]
+        },
+        {
+          name: 'Lista 2',
+          addCardForm: false,
+          newCardName: '',
+          list: [
+            { name: "John 5", 
+              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+              id: 4,
+              comments: [
+                {
+                  commentId: 'xd2',
+                  commentAuthor: 'Dawikk',
+                  commentContent: 'Trzeci komentarz',
+                  commentDate: '',
+                  commentAttachment: [
                                 
-                            ]
-                        }
-                      ],
-                      attachment: [
+                  ]
+                }
+              ],
+              attachment: [
 
-                      ],
-                      state: 'active'
-                    }
-                ]
+              ],
+              state: 'active'
+            },
+            { name: "John 8", 
+              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
+              id: 3,
+              comments: [
+                {
+                  commentId: 'xd2',
+                  commentAuthor: 'Dawikk',
+                  commentContent: 'Czwarty komentarz',
+                  commentDate: '',
+                  commentAttachment: [
+                                
+                  ]
+                }
+              ],
+              attachment: [
+
+              ],
+              state: 'active'
             }
-        ]
-    };
-  },
-  methods: {
-      archiveCard: function(index){
-        this.lists[this.cardId].list[index].state = 'archive';
-      },
-      restoreCard: function(index){
-        this.lists[this.cardId].list[index].state = 'active';
-      },
-      deleteCard: function(index){
-       this.lists[this.cardId].list.splice(index, 1);
-      },
-      addComment: function(index, comment){
-          this.lists[this.cardId].list[index].comments.push(comment);
-      },
-      saveDescription: function(index, description){
-          this.lists[this.cardId].list[index].description = description;
-      },
-      removeCard: function(index){
-          this.lists[this.cardId].list.splice(index, 1);
-      },
-      removeList: function(index){
-          this.lists.splice(index, 1);
-      },
-      showCard: function(index, element, cardId, listName){
-        this.$refs.cardModal.showModal(index, element, listName);
-        this.cardId = cardId;
-      },
-      createCard: function(item){
-          this.closeAddCardForm(item);
-          var element = this.lists[item];
-          var newElement = {name: element.newCardName, id: element.list.length};
-
-          element.list.push(newElement);
-          element.newCardName = '';
-      },
-    showAddCardForm: function(item){
-        this.lists[item].addCardForm = true;
-    },
-    closeAddCardForm: function(item){
-        this.lists[item].addCardForm = false;
-    },
-    addList: function(){
-        if(this.newListName == '')
-            this.newListName = "New list";
-
-        this.lists.push({name: this.newListName, list: [], description: '', addCardForm: false, newCardName: ''});
-        this.newListName = "";
+          ]
+        }
+      ]
     }
   },
-   mounted () {
+  methods: {
+    archiveCard: function(index){
+      this.lists[this.cardId].list[index].state = 'archive'
+    },
+    restoreCard: function(index){
+      this.lists[this.cardId].list[index].state = 'active'
+    },
+    deleteCard: function(index){
+      this.lists[this.cardId].list.splice(index, 1)
+    },
+    addComment: function(index, comment){
+      this.lists[this.cardId].list[index].comments.push(comment)
+    },
+    saveDescription: function(index, description){
+      this.lists[this.cardId].list[index].description = description
+    },
+    removeCard: function(index){
+      this.lists[this.cardId].list.splice(index, 1)
+    },
+    removeList: function(index){
+      this.lists.splice(index, 1)
+    },
+    showCard: function(index, element, cardId, listName){
+      this.$refs.cardModal.showModal(index, element, listName)
+      this.cardId = cardId
+    },
+    createCard: function(item){
+      this.closeAddCardForm(item)
+      var element = this.lists[item]
+      var newElement = {name: element.newCardName, id: element.list.length}
+
+      element.list.push(newElement)
+      element.newCardName = ''
+    },
+    showAddCardForm: function(item){
+      this.lists[item].addCardForm = true
+    },
+    closeAddCardForm: function(item){
+      this.lists[item].addCardForm = false
+    },
+    addList: function(){
+      if(this.newListName == '')
+        this.newListName = "New list"
+
+      this.lists.push({name: this.newListName, list: [], description: '', addCardForm: false, newCardName: ''})
+      this.newListName = ""
+    }
+  },
+  mounted () {
     api.fetchGetBoardsDetails(this.$router.history.current.params.id)
-        .then(responseTitle => {
-            this.boardName = responseTitle.data.title;
-        })
-        .catch(error => {
-            console.log('Error GetBoardsDetails:', error)
-        })
-/// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
+      .then(responseTitle => {
+        this.boardName = responseTitle.data.title
+      })
+      .catch(error => {
+        console.log('Error GetBoardsDetails:', error)
+      })
+    /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
     console.log("mounted:", this.$router.history.current.params.id)
     api.fetchGetBoardColumns(this.$router.history.current.params.id)
-        .then(response => {
-            console.log('respones from api:', response.data)
-            this.columnJSON = response.data
-            this.columnLength = response.data.length
-            console.log('columnJSON:', this.columnJSON)
-        })
-        .catch(error => {
-            console.log('Error fetchGetBoardColumns:', error)
-        })
-/// Poniżej: zwraca szczegóły karty (description, isArchived)
+      .then(response => {
+        console.log('respones from api:', response.data)
+        this.columnJSON = response.data
+        this.columnLength = response.data.length
+        console.log('columnJSON:', this.columnJSON)
+      })
+      .catch(error => {
+        console.log('Error fetchGetBoardColumns:', error)
+      })
+    /// Poniżej: zwraca szczegóły karty (description, isArchived)
     api.fetchGetCard(this.$router.history.current.params.id)
-        .then(response => {
-            console.log('respones from api Card:', response.data)
+      .then(response => {
+        console.log('respones from api Card:', response.data)
         //    this.columnJSON = response.data
         //    this.columnLength = response.data.length
         //    console.log('columnJSON:', this.columnJSON)
-        })
-        .catch(error => {
-            console.log('Error fetchGetCard:', error)
-        })
-/*
+      })
+      .catch(error => {
+        console.log('Error fetchGetCard:', error)
+      })
+    /*
 /// Poniżej: nie działa, powinno zwracać wszystkie karty w podanej liście (kolumnie)
     api.fetchGetColumnCards(this.$router.history.current.params.id)
         .then(response => {
@@ -269,13 +269,13 @@ export default {
         })
 */
     if(this.$route.params.id && this.$route.params.cardId){
-        var item = this.lists[this.$route.params.id];
-        var element = item.list[this.$route.params.cardId];
-        var index = this.$route.params.cardId;
-        this.$refs.cardModal.showModal(index, element, item.name);
-        this.cardId = this.$route.params.cardId;
+      var item = this.lists[this.$route.params.id]
+      var element = item.list[this.$route.params.cardId]
+      var index = this.$route.params.cardId
+      this.$refs.cardModal.showModal(index, element, item.name)
+      this.cardId = this.$route.params.cardId
     }
-   }
+  }
 }
 </script>
 

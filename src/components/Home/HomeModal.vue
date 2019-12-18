@@ -42,10 +42,10 @@ export default {
         this.closeModal();
         this.$emit('addBoard', this.nameOfBoard);
 
-        api.fetchPostBoard(this.nameOfBoard)
-          .then(response => { 
-            // console.log('response POST Board:', response)
-            // if(response.status = 201) console.log('trololololol') 
+        api.fetchPostBoardWithToken(this.nameOfBoard)
+          .then(response => {
+             console.log('response POST Board (fetchPostBoardWithToken):', response)
+             if(response.status = 201) console.log('trololololol') 
           })
           .catch(e => {
             console.log('Error POST Board:', e.message)
