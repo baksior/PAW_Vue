@@ -58,7 +58,7 @@ export default {
         api.fetchLogin(this.login, this.password)
           .then(response => {
           // console.log('response POST Login:', response)
-            // if (response.status = 201) { // To nie powinno tak być. :<
+            if (response.status = 201) { // To nie powinno tak być. :<
               console.log('Logowanie udane!')
               this.$router.push('home')
               console.log(response.data.access_token) // token
@@ -66,7 +66,7 @@ export default {
               sessionStorage.setItem('token', response.data.access_token)
               let test = sessionStorage.getItem('token')
               console.log('test toekn:', test)
-            // }
+            }
           })
           .catch(e => {
             console.log('Error POST Login:', e.message)

@@ -8,7 +8,7 @@ const instance = axios.create({
   timeout: 2500
 });
 */
-const token = sessionStorage.getItem('token')
+let token = sessionStorage.getItem('token')
 export default {
   fetchGetBoards () {
     return axios.get('board/')
