@@ -39,7 +39,7 @@
                     <div class="col-3">
                         <div class="card" @click="createBoard">
                             <div class="card-body">
-                                <p class="card-text">Tworzenie tablic już hula :o</p>
+                                <p class="card-text">Utwórz nową tablicę</p>
                             </div>
                         </div>
                     </div>
