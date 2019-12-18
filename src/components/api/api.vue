@@ -107,20 +107,6 @@ export default {
       data: {}
     })
   },
-  fetchGetCard (_id) {
-    let token = sessionStorage.getItem('token')
-    let url = 'api/card?id=' + _id
-    console.log('url from GetCard', url)
-    return axios({
-      method: 'get',
-      url: url,
-      headers: {
-        'X-Auth-Token': token,
-        'Access-Control-Allow-Origin': '*'
-      },
-      data: {}
-    })
-  },
   fetchPostBoardColumn (_id, name) {
     let token = sessionStorage.getItem('token')
     let url = 'api/board/columns/create' + _id
@@ -133,9 +119,9 @@ export default {
       data: { title: name }
     })
   },
-  fetchGetComments () {
+  fetchGetCardComments () {
     let token = sessionStorage.getItem('token')
-    let url = 'api/comment'
+    let url = 'api/card/comments?id=1'
     return axios({
       method: 'get',
       url: url,
@@ -146,9 +132,23 @@ export default {
       data: {}
     })
   },
-  fetchGetCardComments () {
+  /// ...
+  fetchGetCard (_id) {
     let token = sessionStorage.getItem('token')
-    let url = 'api/card/comments?id=1'
+    let url = 'api/card?id=' + _id
+    return axios({
+      method: 'get',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: {}
+    })
+  },
+  fetchGetComments () {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/comment'
     return axios({
       method: 'get',
       url: url,

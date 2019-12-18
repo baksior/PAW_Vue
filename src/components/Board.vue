@@ -281,7 +281,7 @@ export default {
       this.closeAddCardForm(item)
       var element = this.lists[item]
       var newElement = {name: element.newCardName, id: element.list.length, description: 'Test', comments: [], attachment: [], labels: [], state: 'active'}
-console.log(newElement)
+      console.log(newElement)
       element.list.push(newElement)
       element.newCardName = ''
     },
@@ -311,7 +311,7 @@ console.log(newElement)
       })
     /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
     console.log('mounted:', this.$route.params.id) // this.$router.history.current.params.id
-    
+
     api.fetchGetBoardColumns(this.$router.history.current.params.id)
       .then(response => {
         console.log('respones from api:', response.data)
@@ -343,7 +343,7 @@ console.log(newElement)
         //    console.log('columnJSON:', this.columnJSON)
       })
       .catch(error => {
-        console.log('Error fetchGetCard:', error)
+        console.log('Error fetchGetComments:', error)
       })
     api.fetchGetCardComments() // przesłać ID karty
       .then(response => {
@@ -357,7 +357,7 @@ console.log(newElement)
       })
     /*
 /// Poniżej: nie działa, powinno zwracać wszystkie karty w podanej liście (kolumnie)
-    api.fetchGetColumnCards(this.$router.history.current.params.id)
+    api.fetchGetColumnCards(this.$route.params.id)
         .then(response => {
             console.log('respones from api Column/Cards:', response.data)
         //    this.columnJSON = response.data
@@ -368,6 +368,29 @@ console.log(newElement)
             console.log('Error fetchGetColumnCards:', error)
         })
 */
+    api.fetchGetBoardColumns(this.$route.params.id)
+      .then(response => {
+        console.log('respones from api fetchGetBoardColumns2:', response.data)
+        this.columnJSON = response.data
+        this.columnLength = response.data.length
+        console.log('columnJSON:', this.columnJSON)
+      }).then(() => {
+        api.fetchGetCard(this.$route.params.id)
+          .then(response2 => {
+            console.log('respones from api Card2:', response2.data)
+            //    this.columnJSON = response.data
+            //    this.columnLength = response.data.length
+            //    console.log('columnJSON:', this.columnJSON)
+          }).then(() => {
+            api.fetchGetComments() // przesłać ID karty
+              .then(response3 => {
+                console.log('respones from api fetchGetComments2:', response3.data)
+                //    this.columnJSON = response.data
+                //    this.columnLength = response.data.length
+                //    console.log('columnJSON:', this.columnJSON)
+              })
+          })
+      })
 
     if (this.$route.params.id && this.$route.params.cardId) {
       var item = this.lists[this.$route.params.id]
