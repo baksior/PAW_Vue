@@ -108,7 +108,7 @@ export default {
         })
         .catch(error => {
             console.log('Error GetBoards:', error)
-            console.log('Error GetBoards:', error.toString)
+            console.log('Error GetBoards:', error.response)
         })
         // TODO: add isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
   }
