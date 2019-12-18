@@ -62,6 +62,7 @@ export default {
               console.log('Logowanie udane!')
               this.$router.push('home');
               console.log(response.data.access_token) // token
+              sessionStorage.removeItem('token')
               sessionStorage.setItem('token', response.data.access_token)
             }
           })
