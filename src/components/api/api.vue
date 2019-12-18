@@ -43,7 +43,7 @@ export default {
     return axios({
       method: 'POST',
       url: 'api/board', // api/user/boards
-      data: { title: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
+      data: { title: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg', state: 'active' },
       headers: {
         'X-Auth-Token': token
       }
@@ -86,6 +86,7 @@ export default {
   },
   fetchGetBoardColumns (_id) {
     let token = sessionStorage.getItem('token')
+    console.log('token', token);
     let url = 'api/board/columns?id=' + _id
     return axios({
       method: 'GET',

@@ -11,7 +11,7 @@
                             :key="index"
                             @click="showCard(index, element, i, item.name)"
                         >
-                            <router-link :to="`/board/${index}/card/${i}`">
+                            <router-link :to="`/board/${$route.params.listId}/list/${element.id}/card/${item.id}`">
                                 <div v-if="element.state === 'active'" class="list-group-item">
                                     {{ element.name }}
                                 </div>
@@ -60,6 +60,7 @@
 import draggable from 'vuedraggable'
 import CardModal from '@/components/Board/CardModal'
 import api from './api/api.vue'
+import axios from 'axios'
 
 export default {
   name: 'Board',
@@ -84,140 +85,6 @@ export default {
       boardName: 'Tablica',
       newListName: '',
       lists: [
-        {
-          addCardForm: false,
-          newCardName: '',
-          name: 'Lista 1',
-          list: [
-            { name: 'John',
-              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-              id: 1,
-              comments: [
-                {
-                  commentId: 'xd2',
-                  commentAuthor: 'Dawikk',
-                  commentContent: 'Testowy komentarz',
-                  commentDate: '',
-                  commentAttachment: [
-                  ]
-                }
-              ],
-              attachment: [
-
-              ],
-              labels: [
-                {
-                  id: 'label1',
-                  labelTitle: 'Label r wer 332',
-                  labelBackground: '#333333'
-                },
-                {
-                  id: 'label2',
-                  labelTitle: 'Label 2 1  11 ',
-                  labelBackground: '#50AD7A'
-                }
-              ],
-              state: 'active'
-            },
-            { name: 'John 2',
-              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-              id: 2,
-              comments: [
-                {
-                  commentId: 'xd2',
-                  commentAuthor: 'Dawikk',
-                  commentContent: 'Drugi komentarz',
-                  commentDate: '',
-                  commentAttachment: [
-                  ]
-                }
-              ],
-              attachment: [
-
-              ],
-              labels: [
-                {
-                  id: 'label1',
-                  labelTitle: 'Labehfhhfhl',
-                  labelBackground: '#333333'
-                },
-                {
-                  id: 'label2',
-                  labelTitle: 'Label 2hdhhfh',
-                  labelBackground: '#50AD7A'
-                }
-              ],
-              state: 'active'
-            }
-          ]
-        },
-        {
-          name: 'Lista 2',
-          addCardForm: false,
-          newCardName: '',
-          list: [
-            { name: 'John 5',
-              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-              id: 4,
-              comments: [
-                {
-                  commentId: 'xd2',
-                  commentAuthor: 'Dawikk',
-                  commentContent: 'Trzeci komentarz',
-                  commentDate: '',
-                  commentAttachment: [
-                  ]
-                }
-              ],
-              attachment: [
-
-              ],
-              labels: [
-                {
-                  id: 'label1',
-                  labelTitle: 'Labelfsfs',
-                  labelBackground: '#333333'
-                },
-                {
-                  id: 'label2',
-                  labelTitle: 'Label 2gdgdgd',
-                  labelBackground: '#50AD7A'
-                }
-              ],
-              state: 'active'
-            },
-            { name: 'John 8',
-              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
-              id: 3,
-              comments: [
-                {
-                  commentId: 'xd2',
-                  commentAuthor: 'Dawikk',
-                  commentContent: 'Czwarty komentarz',
-                  commentDate: '',
-                  commentAttachment: [
-                  ]
-                }
-              ],
-              labels: [
-                {
-                  id: 'label1',
-                  labelTitle: 'Label 4',
-                  labelBackground: '#333333'
-                },
-                {
-                  id: 'label2',
-                  labelTitle: 'Label 41441',
-                  labelBackground: '#50AD7A'
-                }
-              ],
-              attachment: [
-
-              ],
-              state: 'active'
-            }
-          ]
-        }
       ]
     }
   },
@@ -244,7 +111,7 @@ export default {
       this.lists.splice(index, 1)
     },
     showCard: function (index, element, cardId, listName) {
-      var cardLabels = this.lists[cardId].list[index].labels
+      var cardLabels = this.lists[index].list[cardId].labels
 
       var allLabels = []
 
@@ -263,9 +130,28 @@ export default {
           }
         }
       }
-
-      this.$refs.cardModal.showModal(index, element, listName, cardLabels, allLabels)
       this.cardId = cardId
+
+      let token = sessionStorage.getItem('token')
+      let url = 'api/card/' + this.lists[index].list[cardId].id
+      var sendAttachmentResponse = axios({
+        method: 'get',
+        url: url,
+        headers: {
+          'X-Auth-Token': token
+        },
+        data: {
+        }
+      }).then((value) => {
+        console.log('index', index);
+        console.log('okej', value);
+        var attachments = this.lists[index].list[cardId].attachments;
+
+        this.$refs.cardModal.showModal(index, element, listName, cardLabels, allLabels, attachments)
+      }).catch(function(error) {
+        console.error(error);
+      });
+
     },
     containsObject (obj, list) {
       var i
@@ -281,6 +167,21 @@ export default {
       var element = this.lists[item]
       var newElement = {name: element.newCardName, id: element.list.length}
 
+      let token = sessionStorage.getItem('token')
+      let url = 'api/card/'
+      var sendAttachmentResponse = axios({
+        method: 'POST',
+        url: url,
+        headers: {
+          'X-Auth-Token': token
+        },
+        data: {
+          column: element.id,
+          name: element.newCardName,
+          description: 'No description'
+        }
+      })
+
       element.list.push(newElement)
       element.newCardName = ''
     },
@@ -294,40 +195,101 @@ export default {
       if (this.newListName == '') { this.newListName = 'New list' }
 
       this.lists.push({name: this.newListName, list: [], description: '', addCardForm: false, newCardName: ''})
+
+      let token = sessionStorage.getItem('token')
+      let url = 'api/column/'
+      var sendAttachmentResponse = axios({
+        method: 'POST',
+        url: url,
+        headers: {
+          'X-Auth-Token': token
+        },
+        data: {
+          title: this.newListName,
+          board: this.$route.params.id
+        }
+      })
+
       this.newListName = ''
+
+
     }
   },
   mounted () {
-    api.fetchGetBoardsDetails(this.$router.history.current.params.id)
-      .then(responseTitle => {
-        this.boardName = responseTitle.data.title
-      })
-      .catch(error => {
-        console.log('Error GetBoardsDetails:', error)
-      })
-    /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
-    console.log('mounted:', this.$router.history.current.params.id)
-    api.fetchGetBoardColumns(this.$router.history.current.params.id)
-      .then(response => {
-        console.log('respones from api:', response.data)
-        this.columnJSON = response.data
-        this.columnLength = response.data.length
-        console.log('columnJSON:', this.columnJSON)
-      })
-      .catch(error => {
-        console.log('Error fetchGetBoardColumns:', error)
-      })
-    /// Poniżej: zwraca szczegóły karty (description, isArchived)
-    api.fetchGetCard(this.$router.history.current.params.id)
-      .then(response => {
-        console.log('respones from api Card:', response.data)
-        //    this.columnJSON = response.data
-        //    this.columnLength = response.data.length
-        //    console.log('columnJSON:', this.columnJSON)
-      })
-      .catch(error => {
-        console.log('Error fetchGetCard:', error)
-      })
+    api.fetchGetBoardsDetails(this.$route.params.id)
+    .then(responseTitle => {
+              this.boardName = responseTitle.data.title
+              console.log('kotek', responseTitle);
+              /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
+              console.log('mounted:', this.$route.params.id)
+              api.fetchGetBoardColumns(this.$route.params.id)
+              .then(response => {
+                        console.log('respones from api:', response.data)
+                        this.columnJSON = response.data
+                        this.columnLength = response.data.length
+                        console.log('columnJSON:', this.columnJSON)
+                        for(let i = 0; i < this.columnLength; i++){
+                          let list = response.data[i];
+
+                          let newList = {
+                            id: list.id,
+                            name: list.title,
+                            addCardForm: false,
+                            newCardName: '',
+                            list: []
+                          }
+
+                          console.log('listId', list.id);
+
+                          /// Poniżej: zwraca szczegóły karty (description, isArchived)
+                          api.fetchGetCard(list.id)
+                            .then(cardResponse => {
+                              console.log('respones from api Cardadadad:', cardResponse.data)
+
+                              for(let k = 0; k < cardResponse.data.length; k++){
+                                console.log('kurwa');
+                                let data = cardResponse.data[k];
+                                console.log('kur', data)
+                                if(data.column.id === list.id){
+                                  let card = {
+                                    name: data.name,
+                                    description: data.description,
+                                    id: data.id,
+                                    comments: [
+                                    ],
+                                    attachments: [
+                                    ],
+                                    labels: [
+                                    ],
+                                    state: 'active'
+                                  }
+
+                                  newList.list.push(card);
+                                }
+                              }
+                              
+
+                              //    this.columnJSON = response.data
+                              //    this.columnLength = response.data.length
+                              //    console.log('columnJSON:', this.columnJSON)
+                            })
+                            .catch(error => {
+                              console.log('Error fetchGetCard:', error)
+                            })
+
+                          this.lists.push(newList);
+                        }
+                        console.log(this);
+              })
+              .catch(error => {
+                console.log('Error fetchGetBoardColumns:', error)
+              })
+    })
+    .catch(error => {
+      console.log('Error GetBoardsDetails:', error)
+    })
+    
+    
     /*
 /// Poniżej: nie działa, powinno zwracać wszystkie karty w podanej liście (kolumnie)
     api.fetchGetColumnCards(this.$router.history.current.params.id)
@@ -341,11 +303,11 @@ export default {
             console.log('Error fetchGetColumnCards:', error)
         })
 */
-    if (this.$route.params.id && this.$route.params.cardId) {
-      var item = this.lists[this.$route.params.id]
+    if (this.$route.params.listId && this.$route.params.cardId) {
+      var item = this.lists[this.$route.params.listId]
       var element = item.list[this.$route.params.cardId]
       var index = this.$route.params.cardId
-      this.showCard(this.$route.params.id, element, index, item.name)
+      this.showCard(this.$route.params.listId, element, index, item.name)
       this.cardId = this.$route.params.cardId
     }
   }

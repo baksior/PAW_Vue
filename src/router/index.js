@@ -29,7 +29,7 @@ export default new Router({
       component: Board
     },
     {
-      path: '/board/:id/card/:cardId',
+      path: '/board/:id/list/:listId/card/:cardId',
       name: 'BoardByIdWithCardId',
       component: Board
     }
