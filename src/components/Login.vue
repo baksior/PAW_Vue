@@ -64,6 +64,8 @@ export default {
               console.log(response.data.access_token) // token
               sessionStorage.removeItem('token')
               sessionStorage.setItem('token', response.data.access_token)
+              let test = sessionStorage.getItem('token')
+              console.log('test toekn:', test)
             // }
           })
           .catch(e => {
