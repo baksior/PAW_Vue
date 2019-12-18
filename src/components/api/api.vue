@@ -38,10 +38,9 @@ export default {
   fetchPostBoardWithToken (name) { // Prawdopodobnie token ?
     return axios({
       method: 'POST',
-      url: 'api/user/boards',
+      url: 'api/board', // api/user/boards
       data: { title: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
       headers: {
-        'Content-Type': 'text/plain',
         'X-Auth-Token': token
       }
     })
