@@ -41,8 +41,7 @@ export default {
       url: 'api/board', // api/user/boards
       data: { title: name, image: 'http://dawiq.lh.pl/Trellol//images/lolImg.jpg' },
       headers: {
-        'X-Auth-Token': token,
-        'Access-Control-Allow-Origin': '*'
+        'X-Auth-Token': token
       }
     })
   },
@@ -64,8 +63,8 @@ export default {
       url: 'register',
       data: { username: mail, password: password },
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Access-Control-Allow-Origin': '*'
+        // 'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
   },
