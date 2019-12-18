@@ -24,7 +24,7 @@
                       </div>
                       <div class="row">
                         <div class="labels">
-                          <div class="label" v-for="(label, i) in labels" v-bind:key={i} :style="{backgroundColor: label.labelBackground, color: '#FFFFFF'}">
+                          <div class="label" v-for="(label, i) in cardLabels" v-bind:key={i} :style="{backgroundColor: label.labelBackground, color: '#FFFFFF'}">
                               {{label.labelTitle}}
                           </div>
                           <div class="addLabel" @click="toggleLabelSection">+</div>
@@ -116,7 +116,7 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-12 labelSelect" v-for="(label, i) in labels" v-bind:key={i} :style="{backgroundColor: label.labelBackground, color: '#FFFFFF'}">
+                          <div class="col-12 labelSelect" @click="selectAddLabel(i)" v-for="(label, i) in boardLabels" v-bind:key={i} :style="{backgroundColor: label.labelBackground, color: '#FFFFFF'}">
                               {{label.labelTitle}}
                           </div>
                         </div>
@@ -188,27 +188,24 @@ export default {
       comments: [
       ],
       newLabel: {
-        labelTitle: 'd',
+        labelTitle: '',
         labelBackground: ''
       },
       labelsColor: [
         '#61bd4f', '#f2d600', '#ff9f1a', '#eb5a46', '#c377e0', '#0079bf', '#51e898', '#ff78cb', '#344563', '#b3bac5'
       ],
-      labels: [
-        {
-          id: 'label1',
-          labelTitle: 'Label',
-          labelBackground: '#333333'
-        },
-        {
-          id: 'label2',
-          labelTitle: 'Label 2',
-          labelBackground: '#50AD7A'
-        }
+      cardLabels: [
+      ],
+      boardLabels: [
       ]
     }
   },
   methods:{
+    selectAddLabel: function(i){
+      var selectedLabel = this.boardLabels[i];
+      this.cardLabels.push(selectedLabel);
+      this.boardLabels.splice(i, 1);
+    },
     restoreCard: function(){
       this.isArchive = false;
       this.$emit('restoreCard', this.itemId);
@@ -249,7 +246,7 @@ export default {
       if(event.target.className == 'newCommentInput')
         this.isCommentActive = true;
     },
-    showModal: function(itemId, item, listName){
+    showModal: function(itemId, item, listName, cardLabels, boardLabels){
       this.comments = item.comments;
       this.newCommentValue = '';
       this.showModalAttr = true;
@@ -257,6 +254,8 @@ export default {
       this.item = item;
       this.listName = listName;
       this.isArchive = item.state === 'active' ? false : true;
+      this.cardLabels = cardLabels;
+      this.boardLabels = boardLabels;
     },
     closeModal: function(){
       this.showModalAttr = false;
@@ -287,6 +286,15 @@ export default {
           labelBackground: this.newLabel.labelBackground
         }
 
+        this.labels.push(model);
+        this.newLabel.labelBackground = '';
+        this.newLabel.labelTitle = '';
+      }else{
+        var model = {
+          id: 'label1',
+          labelTitle: this.newLabel.labelTitle,
+          labelBackground: this.newLabel.labelBackground
+        }
         this.labels.push(model);
         this.newLabel.labelBackground = '';
         this.newLabel.labelTitle = '';

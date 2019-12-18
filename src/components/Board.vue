@@ -66,7 +66,7 @@ export default {
   props: {
     isLogged: Boolean
   },
-  created(){
+  created() {
   },
   order: 1,
   components: {
@@ -89,7 +89,7 @@ export default {
           newCardName: '',
           name: 'Lista 1',
           list: [
-            { name: "John", 
+            { name: "John",
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
               id: 1,
               comments: [
@@ -105,6 +105,18 @@ export default {
               attachment: [
 
               ],
+              labels: [
+                {
+                  id: 'label1',
+                  labelTitle: 'Label r wer 332',
+                  labelBackground: '#333333'
+                },
+                {
+                  id: 'label2',
+                  labelTitle: 'Label 2 1  11 ',
+                  labelBackground: '#50AD7A'
+                }
+              ],
               state: 'active'
             },
             { name: "John 2", 
@@ -117,12 +129,23 @@ export default {
                   commentContent: 'Drugi komentarz',
                   commentDate: '',
                   commentAttachment: [
-                                
                   ]
                 }
               ],
               attachment: [
 
+              ],
+              labels: [
+                {
+                  id: 'label1',
+                  labelTitle: 'Labehfhhfhl',
+                  labelBackground: '#333333'
+                },
+                {
+                  id: 'label2',
+                  labelTitle: 'Label 2hdhhfh',
+                  labelBackground: '#50AD7A'
+                }
               ],
               state: 'active'
             },
@@ -143,16 +166,27 @@ export default {
                   commentContent: 'Trzeci komentarz',
                   commentDate: '',
                   commentAttachment: [
-                                
                   ]
                 }
               ],
               attachment: [
 
               ],
+              labels: [
+                {
+                  id: 'label1',
+                  labelTitle: 'Labelfsfs',
+                  labelBackground: '#333333'
+                },
+                {
+                  id: 'label2',
+                  labelTitle: 'Label 2gdgdgd',
+                  labelBackground: '#50AD7A'
+                }
+              ],
               state: 'active'
             },
-            { name: "John 8", 
+            { name: "John 8",
               description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue justo, scelerisque vel neque a, vulputate eleifend tortor. Morbi id ultrices quam. Ut nec nisl urna.',
               id: 3,
               comments: [
@@ -162,8 +196,19 @@ export default {
                   commentContent: 'Czwarty komentarz',
                   commentDate: '',
                   commentAttachment: [
-                                
                   ]
+                }
+              ],
+              labels: [
+                {
+                  id: 'label1',
+                  labelTitle: 'Label 4',
+                  labelBackground: '#333333'
+                },
+                {
+                  id: 'label2',
+                  labelTitle: 'Label 41441',
+                  labelBackground: '#50AD7A'
                 }
               ],
               attachment: [
@@ -177,32 +222,61 @@ export default {
     }
   },
   methods: {
-    archiveCard: function(index){
+    archiveCard: function(index) {
       this.lists[this.cardId].list[index].state = 'archive'
     },
-    restoreCard: function(index){
+    restoreCard: function(index) {
       this.lists[this.cardId].list[index].state = 'active'
     },
-    deleteCard: function(index){
+    deleteCard: function(index) {
       this.lists[this.cardId].list.splice(index, 1)
     },
-    addComment: function(index, comment){
+    addComment: function(index, comment) {
       this.lists[this.cardId].list[index].comments.push(comment)
     },
-    saveDescription: function(index, description){
+    saveDescription: function(index, description) {
       this.lists[this.cardId].list[index].description = description
     },
-    removeCard: function(index){
+    removeCard: function(index) {
       this.lists[this.cardId].list.splice(index, 1)
     },
-    removeList: function(index){
+    removeList: function(index) {
       this.lists.splice(index, 1)
     },
-    showCard: function(index, element, cardId, listName){
-      this.$refs.cardModal.showModal(index, element, listName)
+    showCard: function(index, element, cardId, listName) {
+      var cardLabels = this.lists[cardId].list[index].labels
+
+      var allLabels = []
+
+      // takie tam kopiowanie na szybko :)
+      // mam nadzieje ze sie nie przejmujemy zlozonoscia obliczeniowa xd
+      for(var i = 0; i < this.lists.length; i++) {
+        for(var j = 0; j < this.lists[i].list.length; j++) {
+          // ten wartunek poprawić, ale na razie musi tak być :D
+          if(i != cardId && j != index) {
+            for(var k = 0; k < this.lists[i].list[j].labels.length; k++) {
+              var obj = this.lists[i].list[j].labels[k]
+              if(!this.containsObject(obj, allLabels)) {
+                allLabels.push(obj)
+              }
+            }
+          }
+        }
+      }
+
+      this.$refs.cardModal.showModal(index, element, listName, cardLabels, allLabels)
       this.cardId = cardId
     },
-    createCard: function(item){
+    containsObject(obj, list) {
+      var i
+      for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+          return true
+        }
+      }
+      return false
+    },
+    createCard: function(item) {
       this.closeAddCardForm(item)
       var element = this.lists[item]
       var newElement = {name: element.newCardName, id: element.list.length}
@@ -210,13 +284,13 @@ export default {
       element.list.push(newElement)
       element.newCardName = ''
     },
-    showAddCardForm: function(item){
+    showAddCardForm: function(item) {
       this.lists[item].addCardForm = true
     },
-    closeAddCardForm: function(item){
+    closeAddCardForm: function(item) {
       this.lists[item].addCardForm = false
     },
-    addList: function(){
+    addList: function() {
       if(this.newListName == '')
         this.newListName = "New list"
 
@@ -268,11 +342,11 @@ export default {
             console.log('Error fetchGetColumnCards:', error)
         })
 */
-    if(this.$route.params.id && this.$route.params.cardId){
+    if(this.$route.params.id && this.$route.params.cardId) {
       var item = this.lists[this.$route.params.id]
       var element = item.list[this.$route.params.cardId]
       var index = this.$route.params.cardId
-      this.$refs.cardModal.showModal(index, element, item.name)
+      this.showCard(this.$route.params.id, element, index, item.name)
       this.cardId = this.$route.params.cardId
     }
   }
