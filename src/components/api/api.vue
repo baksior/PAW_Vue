@@ -85,6 +85,7 @@ export default {
   },
   fetchGetBoardColumns (_id) {
     let token = sessionStorage.getItem('token')
+    console.log('token', token);
     let url = 'api/board/columns?id=' + _id
     return axios({
       method: 'GET',
