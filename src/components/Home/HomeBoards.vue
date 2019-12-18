@@ -93,24 +93,43 @@ export default {
       this.$emit('showModal')
     },
     goToBoard (_id) {
-        console.log('goToBoard:', _id)
-//        this.$router.push('board/' + _id)
-        this.$router.push({ path: `/board/${_id}` })
+      console.log('goToBoard:', _id)
+      //        this.$router.push('board/' + _id)
+      this.$router.push({ path: `/board/${_id}` })
     }
   },
   // beforeMount () {
-    mounted () {
-        api.fetchGetBoardsWithToken() // fetchGetBoardsWithToken // fetchGetBoards
-        .then(response => {
-           // console.log('respones from api:', response);
-            this.boards = response.data
-            // console.log('boards:', this.boards);
-        })
-        .catch(error => {
-            console.log('Error GetBoards:', error)
-            console.log('Error GetBoards:', error.response)
-        })
-        // TODO: add isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
+  mounted () {
+    api.fetchGetBoardsWithToken() // fetchGetBoardsWithToken // fetchGetBoards
+      .then(response => {
+        // console.log('respones from api:', response);
+        this.boards = response.data
+        // console.log('boards:', this.boards);
+      })
+      .catch(error => {
+        console.log('Error GetBoards:', error)
+        console.log('Error GetBoards response:', error.response)
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log('GetBoards data:', error.response.data)
+          console.log('GetBoards status:', error.response.status)
+          console.log('GetBoards headers:', error.response.headers)
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log('GetBoards request:', error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error GetBoards message:', error.message)
+        }
+        console.log('GetBoards config:', error.config)
+        let errorObject = JSON.parse(JSON.stringify(error))
+        console.log('GetBoards JSON parse:', errorObject)
+        console.log('GetBoards toJSON:', error.toJSON())
+      })
+    // TODO: add isLoading  https://dev.to/kevinleedrum/axios-tips-for-real-world-apps-3bo4
   }
 }
 </script>
