@@ -36,6 +36,7 @@ export default {
   },
 
   fetchPostBoardWithToken (name) { // Prawdopodobnie token ?
+    console.log('token (fetchPostBoardWithToken):', token)
     return axios({
       method: 'POST',
       url: 'api/board', // api/user/boards

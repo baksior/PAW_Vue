@@ -61,7 +61,7 @@ export default {
             if(response.status = 201) {
               console.log('Logowanie udane!')
               this.$router.push('home');
-    //         console.log(response.data.access_token) // token
+              console.log(response.data.access_token) // token
               sessionStorage.setItem('token', response.data.access_token)
             }
           })
