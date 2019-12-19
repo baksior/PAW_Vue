@@ -174,8 +174,16 @@ export default {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
       card.description = description
+
+      api.fetchPutDescription(card.id, description)
+        .then(response => {
+          // console.log('respones from api fetchPutDescription:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutDescription:', error)
+        })
     },
-    removeCard: function (index) {
+    removeCard: function (index) { // Not used
       var list = this.getListById(this.cardId)
       list.list.splice(index, 1)
     },

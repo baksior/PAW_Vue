@@ -85,7 +85,7 @@ export default {
   },
   fetchGetBoardColumns (_id) {
     let token = sessionStorage.getItem('token')
-    console.log('token', token);
+    console.log('token', token)
     let url = 'api/board/columns?id=' + _id
     return axios({
       method: 'GET',
@@ -210,6 +210,32 @@ export default {
         'Access-Control-Allow-Origin': '*'
       },
       data: { commentAuthor: author, card: _idCard, commentContent: text }
+    })
+  },
+  fetchPutDescription (_idCard, text) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/card/' + _idCard
+    return axios({
+      method: 'PUT',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: { description: text }
+    })
+  },
+  fetchDeleteList (_idList) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/column/' + _idList
+    return axios({
+      method: 'DELETE',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: { }
     })
   }
 }
