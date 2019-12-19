@@ -49,7 +49,7 @@
                     <button @click="addList">Add list</button>
                 </div>
 
-                <CardModal @removeCard="removeCard" @saveDescription="saveDescription" @addComment="addComment" @archiveCard="archiveCard" @deleteCard="deleteCard" @restoreCard="restoreCard" ref="cardModal" />
+                <CardModal @removeCard="deleteCard" @saveDescription="saveDescription" @addComment="addComment" @archiveCard="archiveCard" @deleteCard="deleteCard" @restoreCard="restoreCard" ref="cardModal" />
             </div>
         </div>
 
@@ -149,17 +149,27 @@ export default {
         })
     },
     deleteCard: function (index) {
-      var list = this.getListById(this.cardId)
-      var card = this.getCardById(index, list)
-      list.list.remove(card)
-
       api.fetchDeleteCard(index)
         .then(response => {
+        console.log(this.cardId)
+        console.log(this.lists[index])
+          for(var iter = 0; iter < this.lists.length; iter++){
+            let element2 = this.lists[iter];
+            for(var kur = 0; kur < element2.list.length; kur++){
+              var okej = element2.list[kur];
+              if(okej.id === index){
+                var elementToRemove = iter;
+                var eleXd = kur;
+              }
+            }
+          }
+          this.lists[elementToRemove].list.splice(eleXd, 1);
           console.log('respones from api fetchDeleteCard:', response.data)
         })
         .catch(error => {
           console.log('Error fetchPutCardArchive:', error)
         })
+
     },
     addComment: function (index, comment) {
       var list = this.getListById(this.cardId)
@@ -189,13 +199,17 @@ export default {
     },
     removeCard: function (index) { // Not used
       var list = this.getListById(this.cardId)
+      api.deleteCard(this.cardId);
+
       list.list.splice(index, 1)
     },
     removeList: function (index) {
       var list = this.getListById(index)
       api.fetchDeleteList(index)
         .then(response => {
-          // console.log('respones from api fetchDeleteList:', response.data)
+          // console.log('respones from api fetchDeleteList:', response.data)     
+             location.reload();
+
         })
         .catch(error => {
           console.log('Error fetchDeleteList:', error)
@@ -280,6 +294,8 @@ export default {
           name: element.newCardName,
           description: 'No description'
         }
+      }).then( () => {
+        location.reload();
       })
 
       element.list.push(newElement)
@@ -320,7 +336,6 @@ export default {
     api.fetchGetBoardsDetails(this.$route.params.id)
       .then(responseTitle => {
         this.boardName = responseTitle.data.title
-        console.log('kotek', responseTitle)
         /// Poniżej: zwraca listy (kolumny) i tablice z id kart (cards: [])
         console.log('mounted:', this.$route.params.id)
         api.fetchGetBoardColumns(this.$route.params.id)
@@ -328,7 +343,6 @@ export default {
             console.log('respones from api:', response.data)
             this.columnJSON = response.data
             this.columnLength = response.data.length
-            console.log('columnJSON:', this.columnJSON)
             for (let i = 0; i < this.columnLength; i++) {
               let list = response.data[i]
 
@@ -340,17 +354,19 @@ export default {
                 list: []
               }
 
-              console.log('listId', list.id)
+              console.log('listId', list.cards)
 
-              /// Poniżej: zwraca szczegóły karty (description, isArchived)
-              api.fetchGetCard(list.id)
-                .then(cardResponse => {
-                  console.log('respones from api Cardadadad:', cardResponse.data)
+              console.log('ok', list.cards.length);
 
-                  for (let k = 0; k < cardResponse.data.length; k++) {
-                    console.log('for (let k = 0; k < cardResponse.data.length; k++) {')
-                    let data = cardResponse.data[k]
-                    console.log('kur', data)
+              for(let y = 0; y < list.cards.length; y++){
+                  let cardFuck = list.cards[y];
+                  console.log('lol', cardFuck)
+                  /// Poniżej: zwraca szczegóły karty (description, isArchived)
+                api.fetchGetCard(cardFuck.id)
+                .then(cardResponse5 => {
+                  console.log('respones from api Cardadadad:', cardResponse5.data)
+
+                    let data = cardResponse5.data
                     if (data.column.id === list.id) {
                       let card = {
                         name: data.name,
@@ -362,7 +378,7 @@ export default {
                         ],
                         labels: [
                         ],
-                        state: data.isArchived == true ? 'archive' : 'active',
+                        state: data.isArchived === true ? 'archive' : 'active',
                       }
 
                       // let token = sessionStorage.getItem('token')
@@ -382,8 +398,6 @@ export default {
 
                       newList.list.push(card)
                     }
-                  }
-
                   //    this.columnJSON = response.data
                   //    this.columnLength = response.data.length
                   //    console.log('columnJSON:', this.columnJSON)
@@ -391,6 +405,10 @@ export default {
                 .catch(error => {
                   console.log('Error fetchGetCard:', error)
                 })
+
+
+              }
+              
 
               this.lists.push(newList)
             }

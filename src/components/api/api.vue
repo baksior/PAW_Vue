@@ -93,19 +93,23 @@ export default {
       headers: {
         'X-Auth-Token': token
       },
-      data: {}
+      data: {
+        id: _id
+      }
     })
   },
   fetchGetColumnCards (_id) {
     let token = sessionStorage.getItem('token')
-    let url = 'api/column/cards?id=' + _id
+    let url = 'api/column/cards'
     return axios({
       method: 'get',
       url: url,
       headers: {
         'X-Auth-Token': token
       },
-      data: {}
+      data: {
+        id: _id
+      }
     })
   },
   fetchPostBoardColumn (_id, name) {
@@ -133,10 +137,24 @@ export default {
       data: {}
     })
   },
+  deleteCard (_id) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/card/' + _id
+    return axios({
+      method: 'delete',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: {
+      }
+    })
+  },
   /// ...
   fetchGetCard (_id) {
     let token = sessionStorage.getItem('token')
-    let url = 'api/card?id=' + _id
+    let url = 'api/card/' + _id
     return axios({
       method: 'get',
       url: url,
@@ -144,7 +162,8 @@ export default {
         'X-Auth-Token': token,
         'Access-Control-Allow-Origin': '*'
       },
-      data: {}
+      data: {
+      }
     })
   },
   fetchGetComments () {
