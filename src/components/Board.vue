@@ -205,7 +205,9 @@ export default {
     },
     removeList: function (index) {
       var list = this.getListById(index)
-      api.fetchDeleteList(index)
+      //       this.lists.remove(list)
+  //    list.splice(index, 1) // to nie działa
+      api.fetchDeleteList(index) // usuwa.
         .then(response => {
           // console.log('respones from api fetchDeleteList:', response.data)     
              location.reload();
@@ -214,7 +216,6 @@ export default {
         .catch(error => {
           console.log('Error fetchDeleteList:', error)
         })
-      list.splice(index, 1) // to nie działa
     },
     showCard: function (index, element, cardId, listName) {
       console.log('element', element)
@@ -278,8 +279,8 @@ export default {
     createCard: function (item) {
       this.closeAddCardForm(item)
       var element = this.lists[item]
-      var newElement = {name: element.newCardName, id: element.list.length}
-      // var newElement = {name: element.newCardName, id: element.list.length, description: 'Test', comments: [], attachment: [], labels: [], state: 'active'}
+      // var newElement = {name: element.newCardName, id: element.list.length}
+      var newElement = {name: element.newCardName, id: element.list.length, description: 'Test', comments: [], attachment: [], labels: [], state: 'active'}
 
       let token = sessionStorage.getItem('token')
       let url = 'api/card/'
