@@ -193,14 +193,15 @@ export default {
     },
     removeList: function (index) {
       var list = this.getListById(index)
-      api.fetchDeleteList(index)
+      //       this.lists.remove(list)
+  //    list.splice(index, 1) // to nie działa
+      api.fetchDeleteList(index) // usuwa.
         .then(response => {
           // console.log('respones from api fetchDeleteList:', response.data)
         })
         .catch(error => {
           console.log('Error fetchDeleteList:', error)
         })
-      list.splice(index, 1) // to nie działa
     },
     showCard: function (index, element, cardId, listName) {
       console.log('element', element)
