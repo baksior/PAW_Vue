@@ -23,7 +23,7 @@
                         <button @click="createCard(i)">Create card</button>
                     </div>
                     <button class="addCardButton" @click="showAddCardForm(i)" v-if="item.addCardForm === false">Add card</button>
-                    <button class="addCardButton" @click="removeList(i)" v-if="item.addCardForm === false">Remove list</button>
+                    <button class="addCardButton" @click="removeList(item.id)" v-if="item.addCardForm === false">Remove list</button>
                 </div>
 
                 <div class="board">
@@ -100,10 +100,12 @@ export default {
         })
     },
     getListById: function (id) {
-      console.log('okej', this.lists)
+      console.log('okej getListById', this.lists)
+      console.log('okej id', id)
       for (let i = 0; i < this.lists.length; i++) {
         let obj = this.lists[i]
         if (obj.id === id) {
+          console.log('getListById', obj)
           return obj
         }
       }
@@ -148,7 +150,9 @@ export default {
     },
     deleteCard: function (index) {
       var list = this.getListById(this.cardId)
-      list.list.splice(index, 1)
+      var card = this.getCardById(index, list)
+      list.list.remove(card)
+
       api.fetchDeleteCard(index)
         .then(response => {
           console.log('respones from api fetchDeleteCard:', response.data)
@@ -188,8 +192,15 @@ export default {
       list.list.splice(index, 1)
     },
     removeList: function (index) {
-      var list = this.getListById(this.cardId)
-      list.splice(index, 1)
+      var list = this.getListById(index)
+      api.fetchDeleteList(index)
+        .then(response => {
+          // console.log('respones from api fetchDeleteList:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchDeleteList:', error)
+        })
+      list.splice(index, 1) // to nie działa
     },
     showCard: function (index, element, cardId, listName) {
       console.log('element', element)
