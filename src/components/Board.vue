@@ -32,11 +32,11 @@
                         <div
                             v-for="(element, index) in item.list"
                             :key="index"
-                            @click="showCard(index, element, i, item.name)"
+                            @click="showCard(element.id, element, item.id, item.name)"
                         >
-                            <router-link :to="`/board/${index}/card/${i}`">
+                            <router-link :to="`/board/${$route.params.id}/list/${item.id}/card/${element.id}`">
                                 <div v-if="element.state === 'archive'" class="list-group-item">
-                                 {{ element.name }}
+                                    {{ element.name }}
                                 </div>
                             </router-link>
                         </div>
@@ -362,8 +362,23 @@ export default {
                         ],
                         labels: [
                         ],
-                        state: 'active'
+                        state: data.isArchived == true ? 'archive' : 'active',
                       }
+
+                      // let token = sessionStorage.getItem('token')
+                      // let url = 'api/cards/labels'
+                      // var sendAttachmentResponse = axios({
+                      //   method: 'get',
+                      //   url: url,
+                      //   headers: {
+                      //     'X-Auth-Token': token
+                      //   },
+                      //   data: {
+                      //     id: data.id
+                      //   }
+                      // }).then( (value) => {
+                      //   console.log('labelki', value);
+                      // });
 
                       newList.list.push(card)
                     }
