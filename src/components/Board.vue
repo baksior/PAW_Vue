@@ -161,6 +161,14 @@ export default {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
       card.comments.push(comment)
+
+      api.fetchPostComment(comment.commentAuthor, card.id, comment.commentContent)
+        .then(response => {
+          // console.log('respones from api fetchPostComment:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPostComment:', error)
+        })
     },
     saveDescription: function (index, description) {
       var list = this.getListById(this.cardId)

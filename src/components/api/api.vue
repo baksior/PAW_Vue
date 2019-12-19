@@ -198,6 +198,19 @@ export default {
       },
       data: { }
     })
+  },
+  fetchPostComment (author, _idCard, text) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/comment'
+    return axios({
+      method: 'POST',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: { commentAuthor: author, card: _idCard, commentContent: text }
+    })
   }
 }
 </script>
