@@ -265,8 +265,8 @@ export default {
     createCard: function (item) {
       this.closeAddCardForm(item)
       var element = this.lists[item]
-      var newElement = {name: element.newCardName, id: element.list.length}
-      // var newElement = {name: element.newCardName, id: element.list.length, description: 'Test', comments: [], attachment: [], labels: [], state: 'active'}
+      // var newElement = {name: element.newCardName, id: element.list.length}
+      var newElement = {name: element.newCardName, id: element.list.length, description: 'Test', comments: [], attachment: [], labels: [], state: 'active'}
 
       let token = sessionStorage.getItem('token')
       let url = 'api/card/'
