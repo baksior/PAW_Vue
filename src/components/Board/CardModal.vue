@@ -39,7 +39,7 @@
                         <div class="row">
                           <div class="col-12">
                             <p v-if="editDescription === false" @click="toggleEditDescription" class="descriptionP">{{item.description}}</p>
-                            <textarea v-if="editDescription === true" v-model="item.description" class="textareaLol"></textarea>
+                            <textarea v-if="editDescription === true" v-model="item.description" v-on:keyup.enter="saveDescription"> class="textareaLol"></textarea>
                           </div>
                         </div>
                         <div v-if="attachments.length !== 0">
@@ -50,7 +50,9 @@
                           </div>
                           <div class="row">
                             <div class="col-12">
-                              <img class="image" v-bind:src="'data:image/jpeg;base64,' + attachments" />
+                              <div v-for="(attachment, i) in attachments" v-bind:key={i}>
+                                <img class="image" :src="attachment" />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -218,26 +220,26 @@ export default {
       ]
     }
   },
-  methods:{
-    selectAddLabel: function(i){
-      var selectedLabel = this.boardLabels[i];
-      this.cardLabels.push(selectedLabel);
-      this.boardLabels.splice(i, 1);
+  methods: {
+    selectAddLabel: function (i) {
+      var selectedLabel = this.boardLabels[i]
+      this.cardLabels.push(selectedLabel)
+      this.boardLabels.splice(i, 1)
     },
-    restoreCard: function(){
-      this.isArchive = false;
-      this.$emit('restoreCard', this.itemId);
+    restoreCard: function () {
+      this.isArchive = false
+      this.$emit('restoreCard', this.itemId)
     },
-    deleteCard: function(){
-      this.$emit('deleteCard', this.itemId);
-      this.showModalAttr = false;
+    deleteCard: function () {
+      this.$emit('deleteCard', this.itemId)
+      this.showModalAttr = false
     },
-    archive: function(){
-      this.isArchive = true;
-      this.$emit('archiveCard', this.itemId);
+    archive: function () {
+      this.isArchive = true
+      this.$emit('archiveCard', this.itemId)
     },
-    addComment: function(){
-      if(this.newCommentValue !== ''){
+    addComment: function () {
+      if (this.newCommentValue !== '') {
         var comment = {
           commentId: 'xd2',
           commentAuthor: 'Dawikk',
@@ -245,92 +247,91 @@ export default {
           commentDate: '',
           commentAttachment: {}
         }
-        this.newCommentValue = '';
-        this.$emit('addComment', this.itemId, comment);
+        this.newCommentValue = ''
+        this.$emit('addComment', this.itemId, comment)
       }
     },
-    editComment: function(comment, i){
-      console.log(comment);
-      console.log(i);
+    editComment: function (comment, i) {
+      console.log(comment)
+      console.log(i)
     },
-    hideAll: function(event){
-      if(event.target.className != 'newCommentInput')
-        this.isCommentActive = false;
-      
-      if(event.target.className != 'descriptionP' && event.target.className != 'textareaLol')
-        this.editDescription = false;
+    hideAll: function (event) {
+      if (event.target.className != 'newCommentInput') { this.isCommentActive = false }
+
+      if (event.target.className != 'descriptionP' && event.target.className != 'textareaLol') { this.editDescription = false }
     },
-    showButtons: function(event){
-      if(event.target.className == 'newCommentInput')
-        this.isCommentActive = true;
+    showButtons: function (event) {
+      if (event.target.className == 'newCommentInput') { this.isCommentActive = true }
     },
-    showModal: function(itemId, item, listName, cardLabels, boardLabels, attachments){
-      this.comments = item.comments;
-      this.newCommentValue = '';
-      this.showModalAttr = true;
-      this.itemId = itemId;
-      this.item = item;
-      this.listName = listName;
-      this.isArchive = item.state === 'active' ? false : true;
-      this.cardLabels = cardLabels;
-      this.boardLabels = boardLabels;
-      this.attachments = attachments;
+    showModal: function (itemId, item, listName, cardLabels, boardLabels, attachments) {
+      this.comments = item.comments
+      this.newCommentValue = ''
+      this.showModalAttr = true
+      this.itemId = itemId
+      this.item = item
+      this.listName = listName
+      this.isArchive = item.state !== 'active'
+      this.cardLabels = cardLabels
+      this.boardLabels = boardLabels
+      this.attachments = attachments
     },
-    closeModal: function(){
-      this.showModalAttr = false;
+    closeModal: function () {
+      this.showModalAttr = false
     },
-    toggleEditDescription: function(event){
-      if(event.target.className == 'descriptionP')
-        this.editDescription = true;
+    toggleEditDescription: function (event) {
+      if (event.target.className == 'descriptionP') { this.editDescription = true }
     },
-    saveDescription: function(){
-      this.$emit('saveDescription', this.itemId, this.item.description);
-      this.toggleEditDescription();
+    saveDescription: function () {
+      this.editDescription = false
+      this.$emit('saveDescription', this.itemId, this.item.description)
+      this.toggleEditDescription()
     },
-    removeCard: function(){
-      this.closeModal();
-      this.$emit('removeCard', this.itemId);
+    removeCard: function () {
+      this.closeModal()
+      this.$emit('removeCard', this.itemId)
     },
-    toggleLabelSection: function(){
-      this.isAddingLabel = !this.isAddingLabel;
+    toggleLabelSection: function () {
+      this.isAddingLabel = !this.isAddingLabel
     },
-    selectColor: function(param){
-      this.newLabel.labelBackground = param;
+    selectColor: function (param) {
+      this.newLabel.labelBackground = param
     },
-    addLabel: function(){
-      if(this.newLabel.labelBackground !== ''){
+    addLabel: function () {
+      if (this.newLabel.labelBackground !== '') {
         var model = {
           id: 'label' + Math.floor(Math.random() * 5000),
           labelTitle: this.newLabel.labelTitle,
           labelBackground: this.newLabel.labelBackground
         }
-        this.cardLabels.push(model);
-        this.$emit('addLabel', this.itemId, this.newLabel);
-        this.newLabel.labelBackground = '';
-        this.newLabel.labelTitle = '';
+        this.cardLabels.push(model)
+        this.$emit('addLabel', this.itemId, this.newLabel)
+        this.newLabel.labelBackground = ''
+        this.newLabel.labelTitle = ''
       }
     },
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.createImage(files[0]);
+    onFileChange (e) {
+      var files = e.target.files || e.dataTransfer.files
+      if (!files.length) { return }
+      this.createImage(files[0])
     },
-    createImage(file) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
+    createImage (file) {
+      var image = new Image()
+      var reader = new FileReader()
+      var vm = this
 
       reader.onload = (e) => {
+        vm.attachments.push(e.target.result)
+
         // Create Base64 Object
-        var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+        var Base64 = {_keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=', encode: function (e) { var t = ''; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 }t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ''; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ''); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } }t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/\r\n/g, '\n'); var t = ''; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ''; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t }}
 
         // Define the string
-        var string = e.target.result;
+        var string = e.target.result
 
         // Encode the String
-        var encodedString = Base64.encode(string);
-        vm.attachments = encodedString;
+        var encodedString = Base64.encode(string)
+
+        console.log(this.lists)
 
         let token = sessionStorage.getItem('token')
         let url = 'api/card/' + this.itemId
@@ -344,11 +345,11 @@ export default {
             attachment: encodedString
           }
         })
-      };
-      reader.readAsDataURL(file);
+      }
+      reader.readAsDataURL(file)
     },
     removeImage: function (e) {
-      this.image = '';
+      this.image = ''
     }
   }
 }
@@ -434,7 +435,7 @@ export default {
   display: table;
   transition: opacity .3s ease;
 }
-  
+
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;

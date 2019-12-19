@@ -122,28 +122,68 @@ export default {
     archiveCard: function (index) {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
+
       card.state = 'archive'
+
+      api.fetchPutCardArchive(card.id, true)
+        .then(response => {
+          // console.log('respones from api fetchPutCardArchive true:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutCardArchive:', error)
+        })
     },
     restoreCard: function (index) {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
       card.state = 'active'
+
+      api.fetchPutCardArchive(card.id, false)
+        .then(response => {
+        //  console.log('respones from api fetchPutCardArchive false:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutCardArchive:', error)
+        })
     },
     deleteCard: function (index) {
       var list = this.getListById(this.cardId)
       list.list.splice(index, 1)
+      api.fetchDeleteCard(index)
+        .then(response => {
+          console.log('respones from api fetchDeleteCard:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutCardArchive:', error)
+        })
     },
     addComment: function (index, comment) {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
       card.comments.push(comment)
+
+      api.fetchPostComment(comment.commentAuthor, card.id, comment.commentContent)
+        .then(response => {
+          // console.log('respones from api fetchPostComment:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPostComment:', error)
+        })
     },
     saveDescription: function (index, description) {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
       card.description = description
+
+      api.fetchPutDescription(card.id, description)
+        .then(response => {
+          // console.log('respones from api fetchPutDescription:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutDescription:', error)
+        })
     },
-    removeCard: function (index) {
+    removeCard: function (index) { // Not used
       var list = this.getListById(this.cardId)
       list.list.splice(index, 1)
     },
