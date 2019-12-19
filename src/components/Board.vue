@@ -122,16 +122,40 @@ export default {
     archiveCard: function (index) {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
+
       card.state = 'archive'
+
+      api.fetchPutCardArchive(card.id, true)
+        .then(response => {
+          // console.log('respones from api fetchPutCardArchive true:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutCardArchive:', error)
+        })
     },
     restoreCard: function (index) {
       var list = this.getListById(this.cardId)
       var card = this.getCardById(index, list)
       card.state = 'active'
+
+      api.fetchPutCardArchive(card.id, false)
+        .then(response => {
+        //  console.log('respones from api fetchPutCardArchive false:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutCardArchive:', error)
+        })
     },
     deleteCard: function (index) {
       var list = this.getListById(this.cardId)
       list.list.splice(index, 1)
+      api.fetchDeleteCard(index)
+        .then(response => {
+          console.log('respones from api fetchDeleteCard:', response.data)
+        })
+        .catch(error => {
+          console.log('Error fetchPutCardArchive:', error)
+        })
     },
     addComment: function (index, comment) {
       var list = this.getListById(this.cardId)

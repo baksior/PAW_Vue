@@ -172,6 +172,32 @@ export default {
       },
       data: { title: title }
     })
+  },
+  fetchPutCardArchive (_id, bool) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/card/' + _id
+    return axios({
+      method: 'PUT',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: { isArchived: bool }
+    })
+  },
+  fetchDeleteCard (_id) {
+    let token = sessionStorage.getItem('token')
+    let url = 'api/card/' + _id
+    return axios({
+      method: 'DELETE',
+      url: url,
+      headers: {
+        'X-Auth-Token': token,
+        'Access-Control-Allow-Origin': '*'
+      },
+      data: { }
+    })
   }
 }
 </script>
